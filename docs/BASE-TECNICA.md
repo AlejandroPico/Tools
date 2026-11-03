@@ -1,6 +1,6 @@
 # Base técnica propuesta
 
-Documento de diseño y evolución. Ya existen escritorio, Bloc de notas, Reloj, Calculadora con modos, Grabadora y Archivos; las capacidades descritas como futuras siguen pendientes. El README describe el alcance disponible.
+Documento de diseño y evolución. Ya existen escritorio, Bloc de notas, Reloj, Calculadora con modos, Datos, Imagen, Diseño, Grabadora y Archivos; las capacidades descritas como futuras siguen pendientes. El README describe el alcance disponible.
 
 ## Aplicación estática y modular
 

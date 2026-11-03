@@ -9,9 +9,9 @@ Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan 
 | 1 | Texto | Notas con pestañas, Markdown, comparación, limpieza, recuentos | Primera versión disponible en Bloc de notas |
 | 2 | Tiempo | Cronómetro con vueltas, temporizadores, Pomodoro, ciudades, calendario con notas | Primera versión disponible en Reloj, con alarmas adicionales |
 | 3 | Cálculo | Científica, gráfica, programador, fechas/edades, unidades | Primera versión disponible como modos de Calculadora |
-| 4 | Datos y programación | JSON, CSV, expresiones regulares, bases numéricas, URL/Base64 | Pendiente; las bases ya existen dentro de Programador |
-| 5 | Imágenes | Paint, recortes, tamaño, formatos, compresión | Pendiente |
-| 6 | Diseño y colores | Cuentagotas, paletas, contraste, degradados, SVG | Pendiente |
+| 4 | Datos y programación | JSON, CSV, expresiones regulares, bases numéricas, URL/Base64 | Primera versión disponible en Datos |
+| 5 | Imágenes | Paint, recortes, tamaño, formatos, compresión | Primera versión disponible en Imagen |
+| 6 | Diseño y colores | Cuentagotas, paletas, contraste, degradados, SVG | Primera versión disponible en Diseño |
 | 7 | Utilidades | Contraseñas, QR, códigos de barras, números aleatorios, sorteos | Pendiente |
 | 8 | Archivos | ZIP, comparación, hexadecimal, SHA-256, generación de archivos | Parcial: explorador, copias, carpetas y creación de TXT ya disponibles |
 | 9 | PDF | Visor, unir, separar, reordenar/rotar, imágenes a PDF | Pendiente |
@@ -27,8 +27,8 @@ Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan 
 - Inicio con búsqueda, categorías y listado alfabético; barra con solo ventanas abiertas, Inicio y reloj.
 - Esquinas rectas en la interfaz, salvo los marcos de iconos.
 - Menú contextual, organización en cascada/mosaico y Acerca de como última opción.
-- 24 temas de mañana, tarde y noche; preferencias y geometría locales.
-- Exportación de archivos, borradores de notas, historial y estado del Reloj locales.
+- 32 temas de mañana, tarde, noche y Mate, incluido Negro OLED #000000; preferencias y geometría locales.
+- Exportación de archivos, borradores de notas, historial, estado del Reloj y borradores de Datos, Imagen y Diseño locales.
 - Pruebas automáticas y publicación mediante GitHub Actions desde main.
 
 ## Criterio para cerrar cada entrega

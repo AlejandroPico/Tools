@@ -30,10 +30,12 @@ test('redimensionar un solo borde no desplaza los otros ejes', () => {
   assert.deepEqual(resizeRect(rect, 'e', 50, 90, bounds), { ...rect, width: 450 });
   assert.deepEqual(resizeRect(rect, 'n', 50, -30, bounds), { ...rect, top: 50, height: 330 });
 });
-test('24 temas únicos repartidos entre mañana, tarde y noche', () => {
-  assert.equal(themes.length, 24);
-  assert.equal(new Set(themes.map(theme => theme.id)).size, 24);
-  for (const group of ['Mañana', 'Tarde', 'Noche']) assert.equal(themes.filter(theme => theme.group === group).length, 8);
+test('32 temas únicos, ocho por categoría, con negro OLED puro', () => {
+  assert.equal(themes.length, 32);
+  assert.equal(new Set(themes.map(theme => theme.id)).size, 32);
+  for (const group of ['Mañana', 'Tarde', 'Noche', 'Mate']) assert.equal(themes.filter(theme => theme.group === group).length, 8);
+  assert.equal(getTheme('mate-negro-oled').base, '#000000');
+  assert.equal(getTheme('mate-negro-oled').matte, true);
   assert.equal(getTheme('dato-antiguo-o-corrupto').id, defaultThemeId);
   for (const theme of themes) for (const color of [theme.base, theme.glow, theme.accent]) assert.match(color, /^#[\da-f]{6}$/i);
 });

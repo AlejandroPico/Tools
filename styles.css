@@ -4,6 +4,9 @@
 @import url('./tools/notepad/styles.css');
 @import url('./tools/clock/styles.css');
 @import url('./tools/calculator/advanced.css');
+@import url('./core/workbench.css');
+@import url('./tools/image/styles.css');
+@import url('./tools/design/styles.css');
 :root {
   font-family:Inter,"Segoe UI",system-ui,sans-serif;
   color:#e9eef1;

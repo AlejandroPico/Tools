@@ -1,0 +1,7 @@
+.design-preview{min-height:160px;display:grid;place-items:center;border:1px solid var(--line);padding:22px;text-align:center;font-size:22px;line-height:1.5}
+.design-palette{display:flex;gap:8px;flex-wrap:wrap}.design-swatch{display:flex;flex-direction:column;gap:6px;min-width:105px;border:1px solid var(--line);padding:8px}.design-swatch input[type=color]{width:100%;height:55px}.design-swatch span{font:12px Consolas,monospace}.design-swatch button{font-size:11px;padding:4px}
+.design-image-area{border:1px solid var(--line);padding:10px;overflow:auto;min-height:130px;display:grid;place-items:center;background:var(--panel-strong)}
+.design-image-area canvas{max-width:100%;height:auto;cursor:crosshair}.design-image-area canvas[hidden]{display:none}
+.design-stops{display:flex;flex-direction:column;gap:8px}.design-stop{display:flex;gap:8px;align-items:center}.design-stop label{flex:1}
+.design-svg-preview{background:repeating-conic-gradient(#c2c2c2 0% 25%,#eeeeee 0% 50%) 0 0/16px 16px;border:1px solid var(--line);min-height:200px;display:grid;place-items:center;padding:16px;overflow:hidden}.design-svg-preview img{max-width:100%;max-height:320px;object-fit:contain}
+.design-contrast-result{font:600 22px/1.3 Consolas,monospace}.design-app .wb-editor textarea{min-height:250px}

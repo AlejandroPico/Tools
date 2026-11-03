@@ -7,9 +7,9 @@ export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
   applyTheme(currentTheme);
 
   function mountProperties(root) {
-    root.innerHTML = `<div class="desktop-properties"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>24 fondos y colores para tu escritorio. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></div>`;
+    root.innerHTML = `<div class="desktop-properties"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>32 temas: mañana, tarde, noche y colores mate. Negro OLED utiliza un fondo negro puro. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></div>`;
     const groups = root.querySelector('.theme-groups');
-    for (const group of ['Mañana', 'Tarde', 'Noche']) {
+    for (const group of ['Mañana', 'Tarde', 'Noche', 'Mate']) {
       const section = document.createElement('section');
       const heading = document.createElement('h4'); heading.textContent = group;
       const grid = document.createElement('div'); grid.className = 'theme-grid';
@@ -20,7 +20,7 @@ export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
         input.setAttribute('aria-label', `${group}: ${theme.name}`);
         const swatch = document.createElement('span'); swatch.className = 'theme-swatch';
         swatch.setAttribute('aria-hidden', 'true');
-        swatch.style.background = `radial-gradient(ellipse at 80% 90%, ${theme.glow}, transparent 85%), ${theme.base}`;
+        swatch.style.background = theme.matte ? theme.base : `radial-gradient(ellipse at 80% 90%, ${theme.glow}, transparent 85%), ${theme.base}`;
         const name = document.createElement('span'); name.textContent = theme.name;
         label.append(input, swatch, name); grid.append(label);
         input.addEventListener('change', () => choose(theme));

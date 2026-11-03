@@ -1,0 +1,7 @@
+.image-app .wb-body{gap:9px}.image-stage{flex:1;min-height:180px;overflow:auto;display:grid;place-items:start center;padding:16px;border:1px solid var(--line);background:var(--panel-strong)}
+.image-canvas-wrap{position:relative;max-width:100%;line-height:0;background:repeating-conic-gradient(#c2c2c2 0% 25%,#eeeeee 0% 50%) 0 0/16px 16px}
+.image-canvas-wrap canvas{display:block;max-width:100%;height:auto;touch-action:none;cursor:crosshair;outline-offset:4px}
+.image-crop-overlay{position:absolute;border:2px dashed #fff;outline:1px solid #000;pointer-events:none;background:#ffffff12}
+.image-app .wb-toolbar select{max-width:155px}.image-app .wb-toolbar label{font-size:11px}.image-app .image-tools{gap:4px}.image-tools button{font-size:12px;padding:6px 8px}
+.image-app details{font-size:12px;border:1px solid var(--line);padding:9px}.image-app summary{cursor:pointer}.image-app details>.wb-toolbar{margin-top:10px}
+.image-app .wb-status{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.image-size{font-size:11px;color:var(--muted)}

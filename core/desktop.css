@@ -178,3 +178,10 @@ input, textarea, select { background: var(--input); color: var(--text); }
 .launcher-app:hover .launcher-app-arrow,.launcher-app:focus-visible .launcher-app-arrow { opacity: 1; }
 #launcher-no-results { padding: 15px; font-size: 12px; line-height: 1.8; color: var(--muted); }
 @media(max-width:420px) { .launcher-layout { grid-template-columns: 105px minmax(0,1fr); } #launcher-categories button { padding-left: 11px; } .launcher-app { padding: 8px; gap: 9px; } }
+:root[data-finish=matte] body { background: var(--desktop-base); }
+:root[data-finish=matte] body::before { display: none; }
+:root[data-finish=matte] * { box-shadow: none !important; text-shadow: none !important; backdrop-filter: none !important; }
+:root[data-finish=matte] .app-icon,:root[data-finish=matte] .window-title-icon { background: var(--soft); color: var(--text); }
+:root[data-finish=matte] .theme-swatch { box-shadow: none; border: 1px solid var(--line); }
+:root[data-finish=matte] .recorder-visual { background: var(--panel); }
+:root[data-finish=matte] .primary-button:hover,:root[data-finish=matte] .calc-keys .equals-key:hover { filter: none; }

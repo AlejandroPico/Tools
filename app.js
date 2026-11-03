@@ -6,11 +6,17 @@ import { mountRecorder } from './tools/audio-recorder/app.js';
 import { mountExplorer } from './tools/file-explorer/app.js';
 import { mountNotepad } from './tools/notepad/app.js';
 import { mountClock } from './tools/clock/app.js';
+import { mountData } from './tools/data/app.js';
+import { mountImage } from './tools/image/app.js';
+import { mountDesign } from './tools/design/app.js';
 import { createClockService, installClockAlerts } from './tools/clock/service.js';
 
 const clockService = createClockService();
 
 const apps = [
+  { id: 'data', name: 'Datos', category: 'Datos', description: 'JSON, CSV, expresiones regulares, URL, Base64 y bases numéricas.', icon: 'data', color: 'mint', width: 940, height: 720, mount: mountData },
+  { id: 'image', name: 'Imagen', category: 'Imagen', description: 'Dibujar, recortar, redimensionar y convertir imágenes PNG, JPEG y WebP.', icon: 'image', color: 'coral', width: 1040, height: 780, mount: mountImage },
+  { id: 'design', name: 'Diseño', category: 'Diseño', description: 'Cuentagotas, paletas, contraste, degradados y editor SVG.', icon: 'palette', color: 'amber', width: 940, height: 720, mount: mountDesign },
   { id: 'notepad', name: 'Bloc de notas', category: 'Texto', description: 'Notas, Markdown, comparar y limpiar texto.', icon: 'notes', color: 'mint', width: 920, height: 680, mount: mountNotepad },
   { id: 'clock', name: 'Reloj', category: 'Tiempo', description: 'Alarmas, cronómetro, temporizadores, Pomodoro, ciudades y calendario.', icon: 'clock', color: 'amber', width: 800, height: 680, mount: root => mountClock(root, clockService) },
   { id: 'calculator', name: 'Calculadora', category: 'Cálculo', description: 'Estándar, científica, gráfica, programador, fechas, edades y unidades.', icon: 'calculator', color: 'mint', width: 450, height: 680, mount: mountCalculator },

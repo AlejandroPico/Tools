@@ -11,8 +11,11 @@ export function downloadFile(blob, filename) {
 
 // Call directly from the user's click to retain browser activation.
 export async function saveFile(blob, filename) {
+  // Attach a rejection handler immediately, including while the destination picker is open.
+  const prepared = Promise.resolve(blob).then(value => ({ value, ok: true }), error => ({ error, ok: false }));
+  const content = async () => { const result = await prepared; if (!result.ok) throw result.error; return result.value; };
   if (!('showSaveFilePicker' in window)) {
-    downloadFile(blob, filename);
+    downloadFile(await content(), filename);
     return 'downloaded';
   }
   let handle;
@@ -21,8 +24,9 @@ export async function saveFile(blob, filename) {
     if (error.name === 'AbortError') return 'cancelled';
     throw error;
   }
+  const data = await content();
   const writable = await handle.createWritable();
-  try { await writable.write(blob); await writable.close(); }
+  try { await writable.write(data); await writable.close(); }
   catch (error) { await writable.abort().catch(() => {}); throw error; }
   return 'saved';
 }

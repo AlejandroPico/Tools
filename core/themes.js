@@ -29,20 +29,31 @@ const palettes = {
     ['pizarra', 'Pizarra', '#19282c', '#37585e', '#b2dedb', 185],
     ['medianoche', 'Medianoche', '#111526', '#303b69', '#becbff', 230],
   ],
+  'Mate': [
+    ['negro-oled', 'Negro OLED', '#000000', '#000000', '#c6c6c6', 0],
+    ['grafito', 'Grafito mate', '#111111', '#111111', '#cccccc', 0],
+    ['carbon', 'Carbón', '#1b1b1b', '#1b1b1b', '#cecece', 0],
+    ['azul', 'Azul mate', '#07111c', '#07111c', '#b4c4d2', 210],
+    ['verde', 'Verde mate', '#08140e', '#08140e', '#b7c9bc', 150],
+    ['ciruela', 'Ciruela mate', '#160e18', '#160e18', '#cbbbd0', 285],
+    ['arena', 'Arena mate', '#d7cbb4', '#d7cbb4', '#655b47', 40],
+    ['blanco', 'Blanco mate', '#ffffff', '#ffffff', '#454545', 0],
+  ],
 };
 
 export const themes = Object.entries(palettes).flatMap(([group, rows]) => rows.map(([id, name, base, glow, accent, hue]) => ({
-  id: `${group.toLowerCase().replace('ñ', 'n')}-${id}`, name, group, base, glow, accent, hue,
+  id: `${group.toLowerCase().replace('ñ', 'n')}-${id}`, name, group, base, glow, accent, hue, matte: group === 'Mate',
 })));
 export const defaultThemeId = 'noche-original';
 export const getTheme = id => themes.find(theme => theme.id === id) || themes.find(theme => theme.id === defaultThemeId);
 
 export function applyTheme(theme) {
-  const light = theme.group === 'Mañana';
+  const light = theme.group === 'Mañana' || ['mate-arena', 'mate-blanco'].includes(theme.id);
   const dusk = theme.group === 'Tarde';
   const root = document.documentElement;
   root.dataset.surface = light ? 'light' : 'dark';
   root.dataset.theme = theme.id;
+  root.dataset.finish = theme.matte ? 'matte' : 'ambient';
   const tone = level => `hsl(${theme.hue} ${light ? 20 : 19}% ${level}%)`;
   const properties = {
     '--desktop-base': theme.base, '--desktop-glow': theme.glow,
@@ -59,6 +70,15 @@ export function applyTheme(theme) {
     '--window-border': light ? '#53687855' : '#a0b9c055',
     '--shadow': light ? '#263b5226' : '#00000066',
   };
+  if (theme.matte) {
+    Object.assign(properties, {
+      '--panel': theme.base, '--panel-strong': theme.base, '--input': theme.base,
+      '--soft': light ? '#dfdfdf' : '#1c1c1c', '--number-key': light ? '#f4f4f4' : '#171717',
+      '--function-key': light ? '#e7e7e7' : '#101010', '--shadow': '#00000000',
+      '--window-border': light ? '#00000040' : '#ffffff35', '--line': light ? '#00000024' : '#ffffff24',
+      '--muted': light ? '#505050' : '#a6a6a6', '--text': light ? '#202020' : '#e3e3e3',
+    });
+  }
   for (const [key, value] of Object.entries(properties)) root.style.setProperty(key, value);
   root.style.colorScheme = light ? 'light' : 'dark';
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.base);

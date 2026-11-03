@@ -6,7 +6,7 @@ Un pequeño escritorio de herramientas gratuitas en el navegador. Abre varias ap
 
 ## Aplicaciones disponibles
 
-Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Las primeras familias se reúnen en **Bloc de notas**, **Reloj** y **Calculadora**.
+Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Los seis primeros bloques se reúnen en **Bloc de notas**, **Reloj**, **Calculadora**, **Datos**, **Imagen** y **Diseño**. También están disponibles Archivos y Grabadora.
 
 ### Bloc de notas
 
@@ -34,6 +34,28 @@ El botón de menú lateral cambia entre seis modos de la **misma calculadora**:
 - Programador: enteros exactos con BigInt, bases 2/8/10/16, palabras de 8/16/32/64 bits, signo, operaciones lógicas y bits editables. Los desbordamientos se ajustan al tamaño de palabra.
 - Fechas y edades: diferencia en días y años/meses/días, suma y resta de días, meses y años.
 - Unidades: longitud, superficie, volumen, masa, temperatura, velocidad, tiempo, energía, presión y datos digitales.
+
+### Datos
+
+Cinco espacios en una ventana: JSON con validación, sangría, compactado y orden de claves; CSV con tabla editable y paginada; expresiones regulares con grupos y sustitución; URL/Base64 con UTF-8 y descarga de bytes; conversión exacta de enteros entre bases 2/8/10/16. JSON conserva los lexemas originales de números y claves repetidas, evitando redondear enteros grandes.
+
+JSON y CSV admiten hasta 5 millones de caracteres (archivos de entrada de hasta 5 MB). CSV admite 3.000 filas, 100 columnas y 50.000 celdas. Puedes guardar el texto CSV o la tabla por separado y activar protección de fórmulas al exportar la tabla. Las expresiones regulares se ejecutan en un Worker que se interrumpe al superar un segundo; el texto admite 200.000 caracteres y la vista hasta 1.000 coincidencias. Las capturas y sustituciones tienen límites de memoria. Las bases numéricas admiten hasta 256 cifras de entrada sin recorte a 64 bits.
+
+### Imagen
+
+Lienzo transparente con pincel, borrador, líneas, rectángulos, elipses, texto y relleno con tolerancia. Incluye deshacer/rehacer (hasta 20 estados y un presupuesto de 64 MB), recorte por selección o coordenadas, tamaño con proporción y suavizado, giro de 90° y volteos. Abre imágenes locales o arrástralas al lienzo.
+
+Exporta **PNG, JPEG y WebP**, si el navegador ofrece ese codificador. JPEG y WebP permiten elegir calidad y comparar el tamaño del archivo preparado. PNG conserva transparencia; JPEG la compone sobre blanco. Primero pulsa **Preparar archivo** y después **Guardar como…** o **Descargar**. Cambiar el lienzo o la calidad invalida el archivo preparado. El original no se modifica.
+
+Límite: 30 MB de entrada, 4.096 píxeles por lado y 8 millones de píxeles en el lienzo. GIF se importa como imagen fija; no se editan animaciones, metadatos ni capas. Los SVG de entrada pasan por la misma limpieza que en Diseño. El borrador se guarda como PNG local en IndexedDB; no conserva el historial de deshacer entre sesiones.
+
+### Diseño
+
+Cuentagotas sobre una imagen local (clic o coordenadas), valores HEX/RGB/HSL, extracción de colores y paletas editables de hasta 16 colores. Importa/exporta paletas JSON, variables CSS y muestras SVG. El comprobador de contraste calcula la relación WCAG y los umbrales AA/AAA para colores opacos.
+
+Genera degradados lineales de 2 a 8 paradas con ángulo y posiciones, con exportación CSS, SVG y PNG. El editor de SVG estático admite formas, texto, grupos, degradados, máscaras y recortes. La vista utiliza una imagen aislada; el código se valida y limpia antes de previsualizar o exportar. Se retiran scripts, eventos, HTML, animación, recursos externos, estilos globales y elementos use. La vista puede cambiar si el original utilizaba esas funciones: revisa el resultado. El SVG exportado siempre es el documento limpio. Límite: 1 MB y 5.000 elementos; PNG respeta el límite de tamaño de Imagen.
+
+Datos y Diseño tienen un selector **Al guardar** para elegir destino o descargar directamente. Sus entradas y ajustes se guardan como borradores locales. Las imágenes utilizadas como referencia en el cuentagotas permanecen en memoria durante la sesión; la paleta extraída sí se conserva.
 
 ### Grabadora de audio
 
@@ -68,13 +90,15 @@ Ventanas, paneles, campos y botones tienen esquinas rectas. Solo los marcos de i
 
 Pulsa el botón derecho sobre el fondo para abrir el menú propio del escritorio. Incluye acceso a las aplicaciones, organización de ventanas en cascada o mosaico, **Propiedades del escritorio** y, como última opción, **Acerca de Tools**. En pantallas táctiles, mantén pulsado un espacio vacío. También puedes abrirlo con la tecla de menú contextual o Mayús + F10.
 
-Las propiedades ofrecen **24 temas seleccionables**, ocho de mañana, ocho de tarde y ocho de noche, que cambian el fondo y los colores de las ventanas. El tema elegido y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
+Las propiedades ofrecen **32 temas seleccionables**, ocho por categoría: mañana, tarde, noche y **Mate**, que cambian el fondo y los colores de las ventanas. Los ocho Mate son fondos sólidos sin degradados, sombras ni efectos de brillo: Negro OLED, Grafito mate, Carbón, Azul mate, Verde mate, Ciruela mate, Arena mate y Blanco mate. **Negro OLED utiliza #000000 tanto en el fondo como en los paneles**, manteniendo controles y texto legibles.
+
+El tema elegido y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
 
 El área de escritorio ocupa toda la pantalla. La barra está pegada abajo; una ventana movida hasta el borde inferior puede quedar parcialmente detrás de ella. Al maximizar se utiliza el espacio por encima de la barra.
 
 ## Tus datos y tus archivos
 
-El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Preferencias, historial y estado del Reloj se guardan en localStorage; notas e identificadores de carpetas en IndexedDB. Pueden perderse si borras los datos del sitio. Los archivos del explorador permanecen en sus carpetas y las grabaciones no se guardan automáticamente entre sesiones. Las copias exportadas son independientes de esos borradores.
+El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Preferencias, historial y estado del Reloj se guardan en localStorage; notas, borradores de Datos/Imagen/Diseño e identificadores de carpetas en IndexedDB. Pueden perderse si borras los datos del sitio. Los archivos del explorador permanecen en sus carpetas y las grabaciones no se guardan automáticamente entre sesiones. Las copias exportadas son independientes de esos borradores.
 
 **Guardar como…** abre un selector para elegir el archivo de destino cuando existe soporte. **Descargar** utiliza la configuración del navegador: podrá preguntar la ubicación o usar tu carpeta de descargas. Tools no puede imponer ese ajuste.
 
@@ -108,6 +132,9 @@ tools/
   notepad/                  Bloc de notas y herramientas de texto
   clock/                    Reloj y servicio de avisos
   calculator/               Calculadora, motor y estilos
+  data/                     JSON, CSV, expresiones y conversiones
+  image/                    Dibujo y edición de imágenes
+  design/                   Colores, degradados y SVG
   audio-recorder/           Grabadora, formatos y estilos
   file-explorer/            Explorador, modelo y estilos
 tests/                      Pruebas y archivos de ejemplo
@@ -118,7 +145,7 @@ Cada herramienta vive en su propia carpeta dentro de `tools/`. El trabajo se rea
 
 ## Desarrollo y próximos pasos
 
-La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. Las páginas de prueba no se incluyen en `dist/`.
+La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. `tests/creative.html` comprueba limpieza de SVG, imágenes y Worker de datos con una imagen de ejemplo. Las páginas de prueba no se incluyen en `dist/`.
 
 ## Licencia
 
