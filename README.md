@@ -1,66 +1,83 @@
 # Tools
 
-Una caja de herramientas gratuitas para resolver tareas cotidianas desde el navegador, con tus archivos y datos bajo tu control.
+Un pequeño escritorio de herramientas gratuitas en el navegador. Abre varias aplicaciones a la vez, mueve sus ventanas, cambia su tamaño y guarda los archivos en tu equipo.
 
-Tools reunirá pequeñas aplicaciones: bloc de notas, calculadora, capturas de pantalla, grabadoras, dibujo, conversores y otras utilidades que vayan haciendo falta. Cada herramienta deberá aportar algo útil: más comodidad, mejores opciones de exportación, funciones adicionales o la posibilidad de combinarla con otras.
+**[Abrir Tools](https://alejandropico.github.io/Tools/)**
 
-## Estado del proyecto
+## Aplicaciones disponibles
 
-Fase de definición. Este repositorio contiene el concepto, una propuesta de base común y la hoja de ruta. Todavía no hay una aplicación ejecutable ni herramientas implementadas. Las funciones descritas a continuación son objetivos de desarrollo.
+### Calculadora
 
-## La experiencia
+Operaciones básicas, porcentajes, cambio de signo, inverso, raíz, cuadrado y memoria. Admite teclado, operaciones consecutivas y repetición de igual. El historial conserva los últimos 50 resultados en el navegador, permite recuperarlos y exportarlos a TXT. Sigue el cálculo secuencial de una calculadora estándar: `2 + 3 × 4 = 20`.
 
-- Un catálogo con buscador, categorías y favoritos.
-- Herramientas utilizables a página completa o en ventanas dentro de la aplicación.
-- Varias herramientas abiertas a la vez: tomar notas mientras se calcula, o anotar una captura y guardarla.
-- Ventanas que se puedan mover, redimensionar, minimizar y maximizar; en móvil, una vista adaptada a la pantalla.
-- Guardado automático de borradores en el navegador y exportación a archivos del dispositivo.
-- Acceso rápido con teclado, interfaz en español, temas claro y oscuro y controles accesibles.
+### Grabadora de audio
 
-Las ventanas internas serán la experiencia común. Una ventana independiente o siempre visible sobre otras aplicaciones será una mejora opcional, sujeta a lo que permita cada navegador.
+Graba desde el micrófono, muestra la onda de audio, permite pausar, reanudar, escuchar el resultado y ponerle nombre. Ofrece **Guardar como…** en navegadores compatibles y **Descargar** como alternativa. El archivo usa el formato que admita el navegador, como WebM/Opus, Ogg o M4A; no se promete MP3.
 
-## Principios
+La grabación permanece en memoria hasta cerrar la herramienta o iniciar otra. Se avisa antes de descartar audio sin exportar. El límite por toma es una hora o aproximadamente 100 MB. No hay transcripción en esta versión.
 
-1. **Gratis para usar.** Sin suscripciones ni funciones esenciales de pago.
-2. **Vocación de software libre.** Código público y reutilizable bajo una licencia libre que se elegirá antes de publicar la primera versión.
-3. **Datos locales por defecto.** Procesar textos, imágenes y grabaciones en el dispositivo siempre que sea posible. Cualquier servicio externo deberá identificarse y activarse expresamente.
-4. **Guardar y llevarse el trabajo.** Usar formatos comunes y ofrecer importación, exportación y copias de seguridad cuando corresponda.
-5. **Permisos cuando hacen falta.** Pedir cámara, micrófono, pantalla o archivos al iniciar la acción que los necesita.
-6. **Crecer por necesidades reales.** Añadir herramientas independientes y terminadas, con mejoras concretas frente a la alternativa habitual.
+### Explorador de archivos
 
-## Por dónde empezar
+Abre una carpeta autorizada o varios archivos, navega por subcarpetas, filtra por nombre y previsualiza texto, imágenes, audio y vídeo compatibles. Permite descargar o guardar una copia. Es de **solo lectura**: no borra ni modifica los originales.
 
-| Entrega propuesta | Contenido | Valor añadido |
-| --- | --- | --- |
-| Base común | Catálogo, ventanas, preferencias y guardado local | Un solo lugar para trabajar con varias utilidades |
-| Bloc de notas | Varias notas, búsqueda, autoguardado, importar y exportar TXT/Markdown | Recuperar borradores y organizar notas sin cuenta |
-| Calculadora | Operaciones habituales, historial reutilizable y conversiones de unidades | Recuperar cálculos, copiar resultados y enviarlos a una nota |
-| Imágenes y capturas | Abrir una imagen o capturar una fuente compartida, recortar y anotar | Capturar, editar y exportar desde el mismo sitio |
-| Grabadoras | Audio de micrófono, vídeo de pantalla y, después, webcam | Previsualizar y descargar las grabaciones localmente |
+El acceso directo a carpetas depende del navegador; se ofrece selección de carpeta mediante archivos como alternativa. En carpetas abiertas con la API de directorios se muestran hasta 2000 elementos por nivel. La vista de texto se limita a los primeros 200 KB, mientras que la descarga conserva el archivo completo. Los documentos HTML se muestran como texto.
 
-La calculadora científica, gráfica, de programador y de fechas se incorporará progresivamente. La conversión de divisas requerirá decidir de dónde obtener las cotizaciones y mostrar su fecha.
+## Ventanas y teclado
 
-## Qué significa «local»
+- Arrastra la barra superior para mover una ventana; arrastra su esquina inferior derecha para redimensionarla.
+- Usa los botones de minimizar, maximizar/restaurar y cerrar. Recupera una ventana desde la barra inferior.
+- Haz doble clic en la barra superior para maximizar o restaurar.
+- Con la barra superior enfocada: flechas para mover y Mayús + flechas para ajustar el tamaño.
+- En la calculadora: números y operaciones habituales, coma o punto decimal, Intro para igual, Retroceso para borrar una cifra y Esc para reiniciar.
 
-El **borrador del navegador** permite continuar más tarde en el mismo navegador y sitio. Puede perderse al borrar los datos del sitio o por las políticas de almacenamiento del navegador. No sustituye a una copia de seguridad.
+Las ventanas se ajustan al espacio disponible; su contenido puede desplazarse cuando se reduce el tamaño.
 
-El **archivo exportado** queda en el dispositivo y se puede mover, compartir o abrir en otras aplicaciones. Cuando el navegador lo permita, se ofrecerá abrir y guardar directamente en un archivo elegido por la persona. En los demás casos se usará selección de archivos y descarga.
+## Tus datos y tus archivos
 
-Los documentos y grabaciones se almacenarán con mecanismos adecuados a su tamaño, como IndexedDB; las cookies no serán el almacén de trabajo.
+El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Solo el historial de cálculos se conserva entre sesiones, mediante almacenamiento local del navegador; puede perderse si borras los datos del sitio.
 
-## Alcance del navegador
+**Guardar como…** abre un selector para elegir el archivo de destino cuando existe soporte. **Descargar** utiliza la configuración del navegador: podrá preguntar la ubicación o usar tu carpeta de descargas. Tools no puede imponer ese ajuste.
 
-- El explorador de archivos trabajará con los archivos o carpetas que la persona seleccione y autorice.
-- Las capturas y grabaciones de pantalla partirán del selector del navegador. El recorte se aplicará después a la imagen obtenida.
-- La transcripción de voz tendrá una fase propia. Grabar audio localmente y convertirlo a texto son capacidades distintas; algunos motores de reconocimiento envían audio a un servicio externo.
-- Una lupa, un teclado o un lector dentro de Tools actuarán sobre su propio contenido; el control de otras aplicaciones requeriría otro tipo de integración.
+El micrófono requiere HTTPS o localhost y permiso del navegador, solicitado al pulsar grabar. El explorador solo accede a lo que selecciones.
 
-La [base técnica propuesta](docs/BASE-TECNICA.md) detalla estas restricciones y sus fuentes.
+## Ejecutar en local
 
-## Próximas herramientas
+Requiere Node.js 22 o posterior, sin dependencias de terceros:
 
-La [hoja de ruta](ROADMAP.md) recoge las ideas iniciales y los criterios para incorporar otras. Es una lista abierta: no hace falta decidir ahora todas las herramientas que acabarán existiendo.
+```sh
+npm start
+```
+
+Abre `http://127.0.0.1:4187`. También puedes usar cualquier servidor estático; abrir `index.html` directamente como archivo no es suficiente para los módulos JavaScript.
+
+```sh
+npm test
+npm run build
+```
+
+La compilación prepara `dist/`. La raíz también puede publicarse directamente en GitHub Pages, con `main` y la carpeta raíz como origen. Las rutas son relativas y funcionan bajo `/Tools/`. GitHub Actions ejecuta las pruebas y la preparación del sitio con cada cambio en `main`.
+
+## Estructura
+
+```text
+favicon.svg                 Identidad vectorial de Tools
+index.html / app.js         Escritorio y catálogo
+styles.css                  Estilo común
+core/                       Ventanas, archivos y utilidades comunes
+tools/
+  calculator/               Calculadora, motor y estilos
+  audio-recorder/           Grabadora, formatos y estilos
+  file-explorer/            Explorador, modelo y estilos
+tests/                      Pruebas y archivos de ejemplo
+scripts/                    Servidor local y preparación del sitio
+```
+
+Cada herramienta vive en su propia carpeta dentro de `tools/`. El trabajo se realiza directamente en `main`, según la preferencia del propietario.
+
+## Desarrollo y próximos pasos
+
+La [hoja de ruta](ROADMAP.md) recoge nuevas utilidades y futuras mejoras. La [base técnica](docs/BASE-TECNICA.md) conserva las decisiones y referencias de diseño. Para comprobar la grabadora sin activar un micrófono real, abre `tests/browser.html` desde el servidor local: utiliza una señal sintética con `MediaRecorder` real. Esta página no se incluye en `dist/`.
 
 ## Licencia
 
-Pendiente de elección e incorporación. La intención es distribuir Tools como software libre; la publicación del código por sí sola no define sus permisos de reutilización. Véase la [guía de GitHub sobre licencias](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
+Pendiente de elección e incorporación. La intención es distribuir Tools como software libre. Las funciones actuales son gratuitas y el código está publicado; los permisos de reutilización se concretarán con la licencia.

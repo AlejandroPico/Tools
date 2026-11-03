@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tools · Prueba con audio sintético</title><link rel="stylesheet" href="../styles.css"><link rel="icon" href="../favicon.svg"></head><body>
+<script type="module">
+// Development-only harness: real MediaRecorder, synthetic tone, no microphone access.
+const html = await (await fetch('../index.html')).text();
+const documentSource = new DOMParser().parseFromString(html, 'text/html');
+document.body.replaceChildren(...documentSource.body.childNodes);
+document.querySelector('.brand img').src = '../favicon.svg';
+document.querySelector('.brand').href = '../';
+document.querySelector('.local-badge').textContent = 'PRUEBA · Audio sintético';
+const params = new URLSearchParams(location.search);
+Object.defineProperty(navigator.mediaDevices, 'getUserMedia', { configurable: true, value: async () => {
+  if (params.has('deny')) throw new DOMException('Denegado en prueba', 'NotAllowedError');
+  const context = new AudioContext();
+  await context.resume();
+  const oscillator = context.createOscillator();
+  const gain = context.createGain(); gain.gain.value = 0.12;
+  const destination = context.createMediaStreamDestination();
+  oscillator.frequency.value = 440;
+  oscillator.connect(gain).connect(destination); oscillator.start();
+  const track = destination.stream.getAudioTracks()[0];
+  const nativeStop = track.stop.bind(track);
+  track.stop = () => { nativeStop(); oscillator.stop(); context.close().catch(() => {}); };
+  return destination.stream;
+} });
+if (params.has('save')) {
+  window.showSaveFilePicker = async () => {
+    if (params.has('cancel')) throw new DOMException('Cancelado en prueba', 'AbortError');
+    return { createWritable: async () => ({ write: async () => {}, close: async () => {}, abort: async () => {} }) };
+  };
+}
+await import('../app.js');
+</script></body></html>

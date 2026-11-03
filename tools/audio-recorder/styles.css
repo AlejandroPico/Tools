@@ -1,0 +1,176 @@
+.recorder-shell {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  min-height:460px;
+}
+.recorder-intro {
+  margin:5px 20px 0;
+  color:#8da6b5;
+  font-size:11px;
+}
+.recorder-visual {
+  margin:22px 22px 5px;
+  border:1px solid #ffffff08;
+  background:linear-gradient(160deg,#263a4355,#14263255);
+  border-radius:12px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:18px 12px 20px;
+}
+.recorder-state {
+  display:flex;
+  gap:7px;
+  align-items:center;
+  font-size:9px;
+  letter-spacing:.5px;
+  color:#9bb4bb;
+}
+.recorder-state>span:first-child {
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#7eaaa3;
+}
+.recorder-visual canvas {
+  width:100%;
+  height:60px;
+  margin:8px 0 2px;
+}
+.recorder-time {
+  font-size:47px;
+  line-height:1.2;
+  font-weight:350;
+  letter-spacing:2px;
+  font-variant-numeric:tabular-nums;
+  color:#e2ecee;
+}
+.recorder-caption {
+  font-size:9px;
+  color:#6f909d;
+  margin-top:12px;
+}
+.recorder-controls {
+  display:flex;
+  gap:25px;
+  align-items:center;
+  justify-content:center;
+  padding:18px 0 8px;
+}
+.recorder-controls>button {
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  width:36px;
+  height:36px;
+  background:#2c3d4b;
+  border:1px solid var(--line);
+  color:#d6e0e2;
+  font-size:17px;
+}
+.recorder-controls>.recorder-record {
+  width:62px;
+  height:62px;
+  border:5px solid #172735;
+  background:#d79a91;
+  outline:1px solid #ce998e55;
+  box-shadow:0 0 0 5px #d79a9107;
+}
+.recorder-record>span {
+  width:21px;
+  height:21px;
+  background:#ffddd4;
+  border-radius:50%;
+}
+.recorder-controls>.recorder-record:focus-visible {
+  outline:2px solid var(--mint);
+  outline-offset:6px;
+}
+.recorder-stop>span {
+  width:11px;
+  height:11px;
+  background:currentColor;
+  border-radius:2px;
+}
+.recorder-shell[data-state=recording] .recorder-record>span {
+  border-radius:5px;
+}
+.recorder-shell[data-state=recording] .recorder-state>span:first-child {
+  background:#f0a99b;
+  box-shadow:0 0 0 4px #f0a99b15;
+}
+.recorder-shell[data-state=paused] .recorder-state>span:first-child {
+  background:#e5ca8f;
+}
+.recorder-status {
+  text-align:center;
+  margin:10px 24px;
+  min-height:36px;
+}
+.recording-result {
+  margin:5px 22px 15px;
+  padding:16px;
+  border:1px solid #8bc6aa33;
+  border-radius:10px;
+  background:#152a2b55;
+}
+.recording-result-heading {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+.recording-result-heading strong {
+  font-size:11px;
+  font-weight:550;
+}
+.recording-size {
+  font-size:9px;
+  color:#8fa8b3;
+}
+.recording-name-label {
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  font-size:10px;
+  color:#8fa8b3;
+  margin:13px 0;
+}
+.recording-name {
+  width:100%;
+  font-size:11px;
+  color:#e1eceb;
+}
+.recording-downloads {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.recorder-privacy {
+  margin:auto 22px 17px;
+  text-align:center;
+  font-size:9px;
+  line-height:1.8;
+  color:#718e9c;
+  padding-top:10px;
+}
+.recorder-privacy .icon {
+  vertical-align:middle;
+  width:13px;
+  height:13px;
+  margin-right:4px;
+}
+.dock-app.is-recording:before {
+  content:"";
+  width:7px;
+  height:7px;
+  background:#f4a191;
+  position:absolute;
+  right:4px;
+  top:3px;
+  border:2px solid #1d2b38;
+  border-radius:50%;
+  z-index:1;
+}

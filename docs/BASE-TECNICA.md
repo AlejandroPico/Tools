@@ -1,6 +1,6 @@
 # Base técnica propuesta
 
-Documento de diseño, todavía sin implementación. Las decisiones se revisarán al construir la primera versión.
+Documento de diseño y evolución. Ya existe una primera implementación estática con escritorio, calculadora, grabadora y explorador; las capacidades descritas como futuras siguen pendientes. El README describe el alcance disponible.
 
 ## Aplicación estática y modular
 
@@ -12,7 +12,7 @@ Separar tres responsabilidades:
 - **Servicios comunes:** almacenamiento, importación/exportación, comprobación de capacidades y gestión de errores.
 - **Herramientas:** interfaz, estado y operaciones propias de cada utilidad.
 
-Cada herramienta tendrá un identificador estable, nombre, descripción, categoría, requisitos del navegador y una función de apertura con limpieza al cerrar. Las bibliotecas grandes se cargarán bajo demanda. Una ruta o enlace directo permitirá abrir cada herramienta sin obligar a pasar por el catálogo.
+Cada herramienta tiene una carpeta en `tools/` y se registra en `app.js` con identificador, nombre, descripción, icono, dimensiones y función de apertura. La apertura puede devolver una función de limpieza y una comprobación de trabajo sin guardar. Los enlaces `#calculator`, `#audio-recorder` y `#file-explorer` abren directamente cada utilidad. La carga diferida de bibliotecas grandes se incorporará cuando hagan falta.
 
 Usar rutas de recursos compatibles con `/Tools/`, sin asumir alojamiento en la raíz del dominio. El código de cada herramienta debe poder evolucionar sin modificar las demás.
 
@@ -64,4 +64,4 @@ Fuentes: [reconocimiento de voz](https://developer.mozilla.org/en-US/docs/Web/AP
 
 Al implementar, añadir comprobaciones de los cálculos y conversiones, persistencia tras recarga, importación/exportación y recuperación ante errores. Probar permisos, cancelación y liberación de dispositivos en las herramientas multimedia. Revisar teclado, foco, contraste y distribución móvil.
 
-GitHub Actions podrá ejecutar las comprobaciones y preparar el sitio. La publicación se configurará como una tarea separada cuando haya una primera aplicación funcional. La existencia de Actions o de una URL de Pages no significa que ya haya una versión desplegada.
+GitHub Actions ejecuta las comprobaciones y prepara el sitio con cada cambio en `main`. La aplicación es estática y permite publicar la raíz directamente mediante GitHub Pages o el contenido de `dist/` con otro alojamiento estático. La existencia de una URL de Pages no sustituye la comprobación de la versión desplegada.

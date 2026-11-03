@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#111d2a">
+  <meta name="description" content="Tu escritorio de herramientas gratuitas: calculadora, grabadora de audio y explorador de archivos. Todo en tu navegador, con descargas a tu equipo.">
+  <title>Tools · Tu escritorio de herramientas</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-calculator" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M8 7h8M8 11h1m3 0h1m3 0h.1M8 15h1m3 0h1m3 0h.1M8 18h1m3 0h1m3-3v3"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 11v1a7 7 0 0 0 14 0v-1M12 19v3m-4 0h8"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M3 9h18"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H5v20h14V7Zm0 0v6h5M8 13h8m-8 4h6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7M7 12h14"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5Zm-4 9 3 3 5-6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </defs></svg>
+  <header class="desktop-header">
+    <a class="brand" href="./" aria-label="Tools, inicio"><img src="./favicon.svg" alt="" width="42" height="42"><span>tools<span class="brand-dot">.</span></span><span class="brand-caption">UN ESCRITORIO. MUCHAS SOLUCIONES.</span></a>
+    <div class="header-actions"><span class="local-badge"><span></span> En tu dispositivo</span><button class="quiet-button" id="help-button" aria-label="Acerca de Tools">?</button></div>
+  </header>
+  <main id="workspace" aria-label="Escritorio de herramientas">
+    <section class="desktop-welcome" aria-label="Bienvenida">
+      <span class="eyebrow">TU CAJA DE HERRAMIENTAS</span>
+      <h1>Pequeñas herramientas.<br>Muchas posibilidades.</h1>
+      <p>Abre una, o varias.<br>Este espacio es tuyo.</p>
+      <div class="desktop-shortcuts" id="shortcuts"></div>
+      <span class="desktop-footnote"><svg class="icon"><use href="#i-shield"/></svg> Sin cuentas. Sin subir tus archivos.</span>
+    </section>
+    <div id="windows"></div>
+  </main>
+  <footer class="taskbar">
+    <button class="launcher-toggle" id="launcher-toggle" title="Todas las herramientas" aria-label="Todas las herramientas" aria-expanded="false" aria-controls="launcher"><svg class="icon"><use href="#i-grid"/></svg></button>
+    <span class="taskbar-divider"></span>
+    <nav id="dock" aria-label="Aplicaciones"></nav>
+    <div class="taskbar-right"><span id="window-count">Tu espacio de trabajo</span><div class="clock"><time id="clock-time"></time><span id="clock-date"></span></div></div>
+  </footer>
+  <section id="launcher" class="launcher" aria-label="Todas las herramientas" hidden><div class="launcher-heading"><strong>Tus herramientas</strong><span>3 aplicaciones · 100 % en tu navegador</span></div><div id="launcher-apps"></div></section>
+  <dialog id="about-dialog" class="about-dialog"><form method="dialog"><button class="dialog-close quiet-button" aria-label="Cerrar">×</button></form><img src="./favicon.svg" width="64" height="64" alt=""><h2>Un pequeño escritorio.<br>A tu manera.</h2><p>Tools reúne herramientas gratuitas que funcionan en tu navegador. Los cálculos, archivos y grabaciones se procesan en este dispositivo.</p><p>Arrastra las ventanas por la barra superior y cambia su tamaño desde la esquina inferior derecha. Con la barra enfocada, usa las flechas para mover y Mayús + flechas para redimensionar.</p><p>«Guardar como…» permite elegir un archivo cuando el navegador lo admite. Con «Descargar», la ubicación depende de tus ajustes de descargas.</p><a href="https://github.com/AlejandroPico/Tools" target="_blank" rel="noopener noreferrer">Ver el proyecto en GitHub ↗</a></dialog>
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>Activa JavaScript para utilizar las herramientas de este escritorio.</noscript>
+</body>
+</html>

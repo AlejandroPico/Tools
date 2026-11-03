@@ -1,13 +1,23 @@
 # Hoja de ruta
 
-Todas las entregas están pendientes. El orden es una propuesta inicial y podrá cambiar según las necesidades que aparezcan.
+La primera versión ya incluye escritorio con ventanas, calculadora, grabadora de audio y explorador de archivos de solo lectura. El resto del orden es una propuesta y podrá cambiar según las necesidades que aparezcan.
+
+## Ya disponible
+
+- [x] Escritorio con tres aplicaciones, lanzador y barra de tareas.
+- [x] Ventanas movibles y redimensionables, minimizar, maximizar y restaurar.
+- [x] Calculadora estándar con memoria, teclado, historial local y exportación TXT.
+- [x] Grabadora con pausa, reanudación, escucha y exportación al equipo.
+- [x] Explorador de carpetas o archivos seleccionados con filtro, vista previa y descarga.
+- [x] Favicon SVG en la raíz e identidad común.
+- [x] Pruebas de cálculo, formatos y árbol de archivos; comprobaciones en GitHub Actions.
 
 ## 1. Primera versión útil
 
 - [ ] Elegir e incorporar una licencia libre.
-- [ ] Crear una aplicación estática que pueda alojarse en GitHub Pages bajo `/Tools/`.
+- [x] Crear una aplicación estática que pueda alojarse en GitHub Pages bajo `/Tools/`.
 - [ ] Catálogo con buscador, categorías y favoritos.
-- [ ] Gestor de ventanas internas con vista completa y alternativa accesible por teclado.
+- [x] Gestor de ventanas internas con vista completa y alternativa accesible por teclado.
 - [ ] Guardado local con estados claros: guardando, guardado y error.
 - [ ] Exportar e importar los datos de trabajo; explicar dónde se guardan.
 - [ ] Bloc de notas con varias notas, búsqueda, recuentos, TXT y Markdown.

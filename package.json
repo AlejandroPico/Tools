@@ -1,0 +1,13 @@
+{
+  "name": "tools-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Escritorio de herramientas gratuitas para el navegador",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
