@@ -1,91 +1,49 @@
 # Hoja de ruta
 
-La primera versión ya incluye escritorio con ventanas, calculadora, grabadora de audio y explorador de archivos de solo lectura. El resto del orden es una propuesta y podrá cambiar según las necesidades que aparezcan.
+Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan en aplicaciones cuando encajan juntas. No hay un compromiso de crear 70 ventanas o iconos independientes.
 
-## Ya disponible
+## Estado de las familias
 
-- [x] Escritorio con tres aplicaciones, lanzador y barra de tareas.
-- [x] Ventanas movibles y redimensionables, minimizar, maximizar y restaurar.
-- [x] Calculadora estándar con memoria, teclado, historial local y exportación TXT.
-- [x] Grabadora con pausa, reanudación, escucha y exportación al equipo.
-- [x] Explorador de carpetas o archivos seleccionados con filtro, vista previa y descarga.
-- [x] Favicon SVG en la raíz e identidad común.
-- [x] Pruebas de cálculo, formatos y árbol de archivos; comprobaciones en GitHub Actions.
+| Bloque | Familia | Funciones previstas | Estado |
+| --- | --- | --- | --- |
+| 1 | Texto | Notas con pestañas, Markdown, comparación, limpieza, recuentos | Primera versión disponible en Bloc de notas |
+| 2 | Tiempo | Cronómetro con vueltas, temporizadores, Pomodoro, ciudades, calendario con notas | Primera versión disponible en Reloj, con alarmas adicionales |
+| 3 | Cálculo | Científica, gráfica, programador, fechas/edades, unidades | Primera versión disponible como modos de Calculadora |
+| 4 | Datos y programación | JSON, CSV, expresiones regulares, bases numéricas, URL/Base64 | Pendiente; las bases ya existen dentro de Programador |
+| 5 | Imágenes | Paint, recortes, tamaño, formatos, compresión | Pendiente |
+| 6 | Diseño y colores | Cuentagotas, paletas, contraste, degradados, SVG | Pendiente |
+| 7 | Utilidades | Contraseñas, QR, códigos de barras, números aleatorios, sorteos | Pendiente |
+| 8 | Archivos | ZIP, comparación, hexadecimal, SHA-256, generación de archivos | Parcial: explorador, copias, carpetas y creación de TXT ya disponibles |
+| 9 | PDF | Visor, unir, separar, reordenar/rotar, imágenes a PDF | Pendiente |
+| 10 | Capturas y cámara | Imagen de pantalla, vídeo de pantalla, foto/vídeo de webcam, grabadora con marcas | Pendiente; grabación básica de audio ya disponible |
+| 11 | Audio | Recortar, unir, convertir, reproducir con velocidad, tonos | Pendiente |
+| 12 | Voz y lectura | Transcripción, dictado, voz, subtítulos, teleprónter | Pendiente |
+| 13 | Productividad | Tarjetas, pizarra, mapas mentales, tareas, diagramas | Pendiente |
+| 14 | Accesibilidad | Lupa, lectura, teclado, filtros, contraste/tamaño | Pendiente |
 
-## 1. Primera versión útil
+## Base común ya disponible
 
-- [ ] Elegir e incorporar una licencia libre.
-- [x] Crear una aplicación estática que pueda alojarse en GitHub Pages bajo `/Tools/`.
-- [ ] Catálogo con buscador, categorías y favoritos.
-- [x] Gestor de ventanas internas con vista completa y alternativa accesible por teclado.
-- [ ] Guardado local con estados claros: guardando, guardado y error.
-- [ ] Exportar e importar los datos de trabajo; explicar dónde se guardan.
-- [ ] Bloc de notas con varias notas, búsqueda, recuentos, TXT y Markdown.
-- [ ] Calculadora básica con teclado, historial persistente y conversiones de unidades.
-- [ ] Comprobar la experiencia en escritorio y móvil y las alternativas en distintos navegadores.
+- Escritorio vacío al iniciar, ventanas movibles hasta los cuatro límites y tamaño ajustable por todos los bordes y esquinas.
+- Inicio con búsqueda, categorías y listado alfabético; barra con solo ventanas abiertas, Inicio y reloj.
+- Esquinas rectas en la interfaz, salvo los marcos de iconos.
+- Menú contextual, organización en cascada/mosaico y Acerca de como última opción.
+- 24 temas de mañana, tarde y noche; preferencias y geometría locales.
+- Exportación de archivos, borradores de notas, historial y estado del Reloj locales.
+- Pruebas automáticas y publicación mediante GitHub Actions desde main.
 
-**Criterio de entrega:** abrir una nota y la calculadora a la vez, escribir, calcular, recargar, recuperar el trabajo y exportarlo. Un fallo de almacenamiento debe avisarse sin presentar los datos como guardados.
+## Criterio para cerrar cada entrega
 
-## 2. Imágenes y capturas
+1. Una primera versión utilizable de todas las funciones del bloque, agrupadas con sentido.
+2. Ventanas, temas y acceso por teclado integrados con el escritorio.
+3. Guardado local y exportación cuando corresponda, con errores visibles.
+4. Pruebas de los resultados, permisos y conservación de datos.
+5. Comprobación visual y publicación en main.
 
-- [ ] Abrir imágenes locales, recortar, girar y cambiar tamaño.
-- [ ] Capturar una pestaña, ventana o pantalla mediante el selector del navegador.
-- [ ] Anotar con texto, flechas y formas; deshacer y rehacer.
-- [ ] Exportar PNG y JPEG con dimensiones y calidad configurables.
-- [ ] Añadir dibujo tipo Paint con pincel, goma, colores y lienzo configurable.
+Las siguientes entregas pueden ampliar las versiones existentes. Las funciones multimedia, PDF y voz se desarrollarán por partes dentro de su bloque, documentando soporte, formatos y límites de cada navegador.
 
-**Criterio de entrega:** importar o capturar una imagen, recortarla, anotarla y descargarla. Al cancelar el selector, la herramienta sigue siendo utilizable; al terminar se libera la captura.
+## Decisiones pendientes
 
-## 3. Audio, pantalla y webcam
-
-- [ ] Grabadora de micrófono con selector de entrada cuando esté disponible.
-- [ ] Grabación de pantalla con opciones de audio compatibles con el navegador.
-- [ ] Captura de foto y grabación de webcam.
-- [ ] Indicador de grabación, duración, parada, previsualización y descarga.
-- [ ] Detectar formatos disponibles y mostrar el formato real del archivo.
-- [ ] Definir límites de tamaño y recuperación ante falta de espacio.
-
-**Criterio de entrega:** grabar, detener, reproducir y descargar; liberar cámara, micrófono y pantalla al finalizar o cerrar la herramienta. Gestionar permisos denegados y el fin de la compartición desde el navegador.
-
-## 4. Voz y texto
-
-- [ ] Investigar transcripción local: motores del navegador y modelos descargables con licencia compatible.
-- [ ] Medir precisión en español, consumo de memoria y funcionamiento en equipos modestos.
-- [ ] Separar dictado en directo de transcripción de archivos ya grabados.
-- [ ] Editor de transcripción con correcciones y exportación TXT/Markdown.
-- [ ] Lector en voz alta con las voces disponibles y explicación de su procesamiento.
-- [ ] Definir un intercambio de audio y texto con el futuro proyecto del blog.
-
-**Criterio de entrega:** indicar dónde se procesa el audio; el modo local debe funcionar sin enviar su contenido a servicios externos. La elaboración de artículos pertenecerá al proyecto del blog o a una integración explícita posterior.
-
-## 5. Ampliaciones
-
-Ideas sin compromiso de implementación ni prioridad asignada:
-
-| Familia | Ideas |
-| --- | --- |
-| Cálculo | Científica, gráfica, programador, fechas, porcentajes, zonas horarias |
-| Conversión | Unidades, bases numéricas, colores y divisas con fuente y fecha |
-| Tiempo | Cronómetro, temporizadores, Pomodoro y reloj mundial |
-| Texto | Comparar textos, limpiar formato, contar palabras, buscar y reemplazar |
-| Archivos | Explorador de carpetas autorizadas, visor hexadecimal y sumas de verificación |
-| Imagen | Cuentagotas, paletas de color, compresión y conversión de formatos compatibles |
-| Documentos | Unir, dividir, ordenar y rotar PDF mediante una biblioteca adecuada |
-| Desarrollo | Formatear JSON, probar expresiones regulares, codificar URL y Base64 |
-| Utilidades | Crear y leer QR, generar contraseñas localmente con aleatoriedad criptográfica |
-| Accesibilidad | Ampliación del contenido de Tools, lectura y ayudas de entrada |
-
-La instalación como aplicación y el uso sin conexión se añadirán cuando el catálogo y el almacenamiento tengan una base estable. Se indicará qué herramientas siguen necesitando red.
-
-## Cómo elegir la siguiente herramienta
-
-Cada propuesta debe responder a estas preguntas:
-
-1. ¿Qué situación concreta resuelve y qué mejora aporta?
-2. ¿Qué incluye la primera versión y qué queda para después?
-3. ¿Qué datos necesita, dónde se procesan y cómo se exportan?
-4. ¿Funciona localmente? ¿Qué permisos, dependencias o servicios requiere?
-5. ¿Qué alternativa se ofrece si el navegador no admite la función?
-6. ¿Cómo se comprueba que el resultado es correcto y el trabajo se conserva?
-
-Una nueva herramienta debe aprovechar el catálogo, las ventanas y el guardado comunes, cargando sus dependencias solo cuando se abre.
+- Elegir e incorporar una licencia libre.
+- Definir la instalación y el funcionamiento sin conexión.
+- Valorar modelos locales de transcripción por precisión, licencia, tamaño y rendimiento.
+- Mantener separadas las funciones que exigen una aplicación nativa o extensión: acceso libre a todo el disco, alarmas con el navegador cerrado y control de otras aplicaciones no forman parte de una web estática.

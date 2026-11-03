@@ -62,9 +62,10 @@ export class DesktopWindows {
     }
     const bounds = this.bounds();
     const width = Math.min(app.width, bounds.width);
-    const height = Math.min(app.height, bounds.height - 60);
+    const workHeight = bounds.height - document.querySelector('.taskbar').offsetHeight;
+    const height = Math.min(app.height, Math.max(200, workHeight - 48));
     const offset = this.windows.size * 28;
-    const initial = { width, height, left: (bounds.width - width) / 2 + offset, top: 24 + offset };
+    const initial = { width, height, left: (bounds.width - width) / 2 + offset, top: Math.max(0, Math.min(24 + offset, workHeight - height - 12)) };
     const saved = this.layouts[app.id];
     const win = { app, element, maximized: false, controller: null };
     this.windows.set(app.id, win);
@@ -79,7 +80,7 @@ export class DesktopWindows {
     this.windows.forEach(other => other.element.classList.toggle('active', other === win));
     win.element.style.zIndex = ++this.zIndex;
     this.activeId = win.app.id;
-    if (moveFocus) (win.element.querySelector('[data-initial-focus]') || win.element.querySelector('.window-titlebar')).focus({ preventScroll: true });
+    if (moveFocus) (win.element.querySelector('[data-initial-focus]:not(:disabled)') || win.element.querySelector('.window-titlebar')).focus({ preventScroll: true });
     this.onChange(this.windows);
   }
   focusNext() {

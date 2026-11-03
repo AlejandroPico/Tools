@@ -62,4 +62,5 @@ export function applyTheme(theme) {
   for (const [key, value] of Object.entries(properties)) root.style.setProperty(key, value);
   root.style.colorScheme = light ? 'light' : 'dark';
   document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme.base);
+  window.dispatchEvent(new Event('tools:theme-change'));
 }

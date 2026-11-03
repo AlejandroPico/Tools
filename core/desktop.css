@@ -23,6 +23,9 @@ body::before { opacity: .4; }
 #dock:empty { display: none; }
 .taskbar:has(#dock:empty) .taskbar-divider { display: none; }
 .taskbar-right { margin-left: auto; flex-shrink: 0; }
+.clock { background: transparent; border-radius: 6px; padding: 4px 7px; }
+.clock:hover { background: var(--hover); }
+.launcher { max-height: calc(100dvh - var(--taskbar-height) - 20px); overflow-y: auto; }
 .launcher-toggle, .clock, .dock-app { color: var(--text); }
 .launcher-toggle:hover, .launcher-toggle[aria-expanded=true], .dock-app:hover { background: var(--hover); }
 .clock > span { color: var(--muted); }
@@ -139,3 +142,39 @@ input, textarea, select { background: var(--input); color: var(--text); }
   .theme-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .properties-footer { flex-direction: column; align-items: stretch; gap: 10px; }
 }
+
+/* Square components throughout the desktop. Only application icons keep rounded frames. */
+*, *::before, *::after { border-radius: 0 !important; }
+.app-icon { border-radius: 9px !important; }
+.window-title-icon { border-radius: 5px !important; }
+.recorder-record > span { border-radius: 50% !important; }
+.launcher {
+  display: flex;
+  flex-direction: column;
+  width: min(480px, calc(100vw - 16px));
+  height: min(380px, calc(100dvh - var(--taskbar-height) - 20px));
+  padding: 0;
+  overflow: hidden;
+  border-color: var(--window-border);
+}
+.launcher-heading { padding: 18px 20px 12px; margin: 0; flex-shrink: 0; }
+.launcher-heading h2 { margin: 0; font-size: 16px; font-weight: 550; letter-spacing: -.2px; }
+.launcher-search-box { display: flex; margin: 0 16px 14px; position: relative; flex-shrink: 0; }
+#launcher-search { width: 100%; padding: 9px 34px 9px 11px; font-size: 12px; background: var(--input); }
+#launcher-search::-webkit-search-cancel-button { appearance: none; }
+#launcher-clear { display: grid; place-items: center; position: absolute; right: 1px; top: 1px; bottom: 1px; width: 30px; padding: 0; background: transparent; color: var(--muted); }
+#launcher-clear .icon { width: 14px; height: 14px; }
+.launcher-layout { display: grid; grid-template-columns: 128px minmax(0,1fr); min-height: 0; flex: 1; border-top: 1px solid var(--line); }
+#launcher-categories { padding: 8px 0; overflow-y: auto; background: var(--panel-strong); border-right: 1px solid var(--line); }
+#launcher-categories button { display: block; width: 100%; padding: 10px 16px; border-left: 2px solid transparent; text-align: left; background: transparent; font-size: 11px; color: var(--muted); }
+#launcher-categories button[aria-pressed=true] { background: var(--hover); border-left-color: var(--mint); color: var(--text); font-weight: 600; }
+#launcher-categories button:hover { background: var(--hover); color: var(--text); }
+.launcher-results { overflow-y: auto; padding: 6px; }
+.launcher-app { padding: 8px 10px; gap: 12px; min-height: 48px; }
+.launcher-app .app-icon { width: 32px; height: 32px; box-shadow: none; flex-shrink: 0; }
+.launcher-app .app-icon .icon { width: 19px; height: 19px; }
+.launcher-app .app-label { flex: 1; min-width: 0; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.launcher-app-arrow { opacity: 0; color: var(--muted); font-size: 18px; }
+.launcher-app:hover .launcher-app-arrow,.launcher-app:focus-visible .launcher-app-arrow { opacity: 1; }
+#launcher-no-results { padding: 15px; font-size: 12px; line-height: 1.8; color: var(--muted); }
+@media(max-width:420px) { .launcher-layout { grid-template-columns: 105px minmax(0,1fr); } #launcher-categories button { padding-left: 11px; } .launcher-app { padding: 8px; gap: 9px; } }

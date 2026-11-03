@@ -1,8 +1,9 @@
 import { Calculator, formatDisplay } from './engine.js';
 import { readLocal, writeLocal, notify, icon } from '../../core/ui.js';
 import { downloadFile } from '../../core/files.js';
+import { mountCalculatorModes } from './modes.js';
 
-export function mountCalculator(root) {
+function mountStandardCalculator(root) {
   const calc = new Calculator();
   const stored = readLocal('calculator-history', []);
   calc.history = Array.isArray(stored) ? stored.filter(item => item && typeof item.expression === 'string' && typeof item.result === 'string' && Number.isFinite(Number(item.result))).slice(0, 50) : [];
@@ -84,3 +85,5 @@ export function mountCalculator(root) {
   });
   render();
 }
+
+export function mountCalculator(root) { return mountCalculatorModes(root, mountStandardCalculator); }

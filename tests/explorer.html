@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tools · Prueba aislada del explorador</title><link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="../core/desktop.css"></head><body><script type="module">
+// Real origin-private directory handles; no access to the user's native files.
+const html = await (await fetch('../index.html')).text();
+const source = new DOMParser().parseFromString(html, 'text/html');
+document.body.replaceChildren(...source.body.childNodes);
+document.querySelector('#about-dialog img').src = '../favicon.svg';
+const label = document.createElement('div');
+label.style.cssText = 'position:fixed;top:10px;left:12px;font-size:11px;color:var(--text);z-index:10001;pointer-events:none';
+label.textContent = 'PRUEBA · Carpeta aislada del navegador';
+document.body.append(label);
+const storageRoot = await navigator.storage.getDirectory();
+const directory = await storageRoot.getDirectoryHandle('tools-test-files', { create: true });
+const file = await directory.getFileHandle('nota.txt', { create: true });
+const writable = await file.createWritable(); await writable.write('Archivo original de prueba.'); await writable.close();
+await directory.getDirectoryHandle('Subcarpeta', { create: true });
+window.showDirectoryPicker = async () => directory;
+const cleanup = document.createElement('button'); cleanup.textContent = 'Desconectar carpeta de prueba'; cleanup.className = 'secondary-button';
+cleanup.style.cssText = 'position:fixed;right:90px;bottom:8px;z-index:10001';
+cleanup.addEventListener('click', async () => {
+  const { getData, setData } = await import('../core/storage.js');
+  const saved = await getData('explorer-location');
+  if (saved?.handle?.name === directory.name) await setData('explorer-location', null);
+  label.textContent = 'PRUEBA · Carpeta de prueba desconectada';
+});
+document.body.append(cleanup);
+await import('../app.js');
+</script></body></html>

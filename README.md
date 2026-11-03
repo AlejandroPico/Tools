@@ -6,9 +6,34 @@ Un pequeño escritorio de herramientas gratuitas en el navegador. Abre varias ap
 
 ## Aplicaciones disponibles
 
+Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Las primeras familias se reúnen en **Bloc de notas**, **Reloj** y **Calculadora**.
+
+### Bloc de notas
+
+Varias notas con pestañas, título y autoguardado en IndexedDB. Incluye editor de texto, vista Markdown básica (títulos, listas, citas, código, énfasis y enlaces), comparación por líneas, búsqueda y reemplazo literal, limpieza de espacios y cambios de mayúsculas. Muestra palabras, caracteres Unicode, líneas y tiempo orientativo de lectura.
+
+Abre TXT/Markdown, exporta la nota a TXT o MD y guarda/restaura copias JSON de todas las notas. Los borradores del navegador y el archivo exportado son distintos. Los fallos de guardado se muestran y no se presentan como escrituras completadas. La comparación admite 500 000 caracteres y 4000 líneas por operación, y la vista Markdown se limita a 200 000 caracteres; la nota completa se conserva para exportación.
+
+### Reloj
+
+Se abre desde Inicio **o pulsando la fecha y hora de la barra**. Reúne reloj local y ciudades, cronómetro con vueltas y CSV, temporizadores simultáneos, Pomodoro configurable, alarmas de una vez/diarias/laborables y calendario con notas por día y exportación JSON.
+
+Los temporizadores, alarmas y Pomodoro continúan al minimizar o cerrar su ventana. Sus ajustes y las notas se guardan localmente. Los plazos se calculan con marcas de tiempo, no contando llamadas de un intervalo.
+
+**Tools debe permanecer abierto y el equipo despierto para avisar a tiempo.** El navegador puede suspender o retrasar pestañas; no es un despertador del sistema y no despierta equipos apagados o suspendidos. Al volver a abrir se comprueban los avisos vencidos. El sonido se habilita mediante una acción de la persona y las notificaciones del sistema son opcionales. Referencias: [pestañas en segundo plano](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API), [notificaciones](https://developer.mozilla.org/en-US/docs/Web/API/Notifications_API).
+
 ### Calculadora
 
 Operaciones básicas, porcentajes, cambio de signo, inverso, raíz, cuadrado y memoria. Admite teclado, operaciones consecutivas y repetición de igual. El historial conserva los últimos 50 resultados en el navegador, permite recuperarlos y exportarlos a TXT. Sigue el cálculo secuencial de una calculadora estándar: `2 + 3 × 4 = 20`.
+
+El botón de menú lateral cambia entre seis modos de la **misma calculadora**:
+
+- Estándar.
+- Científica: expresiones con prioridad, paréntesis, trigonometría DEG/RAD, logaritmos, potencias, factorial y resultado anterior. `%` representa resto en expresiones científicas. Usa un analizador propio, sin ejecutar código introducido por la persona.
+- Gráfica: hasta tres funciones de x, rangos editables, desplazamiento, zoom y exportación PNG/CSV. Las curvas son muestras aproximadas; los puntos fuera del dominio se omiten.
+- Programador: enteros exactos con BigInt, bases 2/8/10/16, palabras de 8/16/32/64 bits, signo, operaciones lógicas y bits editables. Los desbordamientos se ajustan al tamaño de palabra.
+- Fechas y edades: diferencia en días y años/meses/días, suma y resta de días, meses y años.
+- Unidades: longitud, superficie, volumen, masa, temperatura, velocidad, tiempo, energía, presión y datos digitales.
 
 ### Grabadora de audio
 
@@ -18,7 +43,11 @@ La grabación permanece en memoria hasta cerrar la herramienta o iniciar otra. S
 
 ### Explorador de archivos
 
-Abre una carpeta autorizada o varios archivos, navega por subcarpetas, filtra por nombre y previsualiza texto, imágenes, audio y vídeo compatibles. Permite descargar o guardar una copia. Es de **solo lectura**: no borra ni modifica los originales.
+Abre una carpeta autorizada o varios archivos, navega por subcarpetas con atrás/adelante, ruta y acceso a la carpeta principal, filtra por nombre y previsualiza texto, imágenes, audio y vídeo compatibles. Muestra tamaños y permite descargar o guardar una copia.
+
+Con acceso directo a carpetas permite **copiar y pegar archivos**, crear carpetas y crear archivos TXT con contenido. La escritura se solicita al realizar esas acciones. Las copias buscan un nombre libre y no reemplazan deliberadamente elementos existentes; no se ofrecen borrado, corte ni renombrado.
+
+Recuerda la carpeta y subcarpeta mediante identificadores guardados en IndexedDB. Al abrir Archivos restaura esa ubicación si el permiso sigue vigente; si no, muestra **Volver a conectar**. La primera selección es obligatoria: una web no puede descubrir libremente el disco ni la ruta completa `C:\…`. La ruta visible comienza en la carpeta autorizada. Referencia: [File System Access](https://developer.chrome.com/docs/capabilities/web-apis/file-system-access).
 
 El acceso directo a carpetas depende del navegador; se ofrece selección de carpeta mediante archivos como alternativa. En carpetas abiertas con la API de directorios se muestran hasta 2000 elementos por nivel. La vista de texto se limita a los primeros 200 KB, mientras que la descarga conserva el archivo completo. Los documentos HTML se muestran como texto.
 
@@ -33,6 +62,8 @@ El acceso directo a carpetas depende del navegador; se ofrece selección de carp
 
 Las ventanas se ajustan al espacio disponible; su contenido puede desplazarse cuando se reduce el tamaño.
 
+Ventanas, paneles, campos y botones tienen esquinas rectas. Solo los marcos de iconos mantienen redondeado. Inicio se titula **Aplicaciones**, con listado alfabético, búsqueda por nombre o función y categorías; no muestra contadores ni frases promocionales.
+
 ## Personalizar el escritorio
 
 Pulsa el botón derecho sobre el fondo para abrir el menú propio del escritorio. Incluye acceso a las aplicaciones, organización de ventanas en cascada o mosaico, **Propiedades del escritorio** y, como última opción, **Acerca de Tools**. En pantallas táctiles, mantén pulsado un espacio vacío. También puedes abrirlo con la tecla de menú contextual o Mayús + F10.
@@ -43,7 +74,7 @@ El área de escritorio ocupa toda la pantalla. La barra está pegada abajo; una 
 
 ## Tus datos y tus archivos
 
-El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. El historial de cálculos, el tema y la geometría de las ventanas se conservan entre sesiones mediante almacenamiento local del navegador; pueden perderse si borras los datos del sitio. Las grabaciones y los archivos abiertos no se guardan automáticamente entre sesiones.
+El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Preferencias, historial y estado del Reloj se guardan en localStorage; notas e identificadores de carpetas en IndexedDB. Pueden perderse si borras los datos del sitio. Los archivos del explorador permanecen en sus carpetas y las grabaciones no se guardan automáticamente entre sesiones. Las copias exportadas son independientes de esos borradores.
 
 **Guardar como…** abre un selector para elegir el archivo de destino cuando existe soporte. **Descargar** utiliza la configuración del navegador: podrá preguntar la ubicación o usar tu carpeta de descargas. Tools no puede imponer ese ajuste.
 
@@ -74,6 +105,8 @@ index.html / app.js         Escritorio y catálogo
 styles.css                  Estilo común
 core/                       Ventanas, archivos y utilidades comunes
 tools/
+  notepad/                  Bloc de notas y herramientas de texto
+  clock/                    Reloj y servicio de avisos
   calculator/               Calculadora, motor y estilos
   audio-recorder/           Grabadora, formatos y estilos
   file-explorer/            Explorador, modelo y estilos
@@ -85,7 +118,7 @@ Cada herramienta vive en su propia carpeta dentro de `tools/`. El trabajo se rea
 
 ## Desarrollo y próximos pasos
 
-La [hoja de ruta](ROADMAP.md) recoge nuevas utilidades y futuras mejoras. La [base técnica](docs/BASE-TECNICA.md) conserva las decisiones y referencias de diseño. Para comprobar la grabadora sin activar un micrófono real, abre `tests/browser.html` desde el servidor local: utiliza una señal sintética con `MediaRecorder` real. Esta página no se incluye en `dist/`.
+La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. Las páginas de prueba no se incluyen en `dist/`.
 
 ## Licencia
 

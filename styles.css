@@ -1,6 +1,9 @@
 @import url('./tools/calculator/styles.css');
 @import url('./tools/audio-recorder/styles.css');
 @import url('./tools/file-explorer/styles.css');
+@import url('./tools/notepad/styles.css');
+@import url('./tools/clock/styles.css');
+@import url('./tools/calculator/advanced.css');
 :root {
   font-family:Inter,"Segoe UI",system-ui,sans-serif;
   color:#e9eef1;
