@@ -75,55 +75,13 @@ a {
   flex-shrink:0;
 }
 .desktop-header {
-  height:86px;
-  padding:0 36px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:relative;
-  z-index:2;
-}
-.brand {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  color:#f5f8f8;
-  text-decoration:none;
-}
-.brand>span:first-of-type {
-  font-size:29px;
-  letter-spacing:-1.6px;
-  font-weight:750;
-}
-.brand-dot {
-  color:var(--mint);
-}
-.brand-caption {
-  margin-left:20px;
-  padding-left:22px;
-  border-left:1px solid var(--line);
-  font-size:9px;
-  letter-spacing:1.65px;
-  color:var(--muted);
-}
-.header-actions {
-  display:flex;
-  gap:22px;
-  align-items:center;
-}
-.local-badge {
-  font-size:11px;
-  color:#b6c8c9;
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-.local-badge>span {
-  width:6px;
-  height:6px;
-  border-radius:100%;
-  background:var(--mint);
-  box-shadow:0 0 12px #9ce4c440;
+  height: 52px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 2;
 }
 .quiet-button {
   width:30px;
@@ -142,52 +100,6 @@ a {
   inset:86px 0 88px;
   isolation:isolate;
   overflow:hidden;
-}
-.desktop-welcome {
-  position:absolute;
-  left:5%;
-  top:clamp(30px,10vh,110px);
-  max-width:400px;
-  user-select:none;
-}
-.eyebrow {
-  font-size:9px;
-  letter-spacing:2.1px;
-  font-weight:650;
-  color:#91b4aa;
-}
-.desktop-welcome h1 {
-  font-size:clamp(28px,2.6vw,40px);
-  font-weight:500;
-  letter-spacing:-1.8px;
-  line-height:1.22;
-  margin:20px 0;
-  color:#e5edf0;
-}
-.desktop-welcome>p {
-  color:#8295a5;
-  font-size:14px;
-  line-height:1.8;
-  margin-bottom:32px;
-}
-.desktop-shortcuts {
-  display:flex;
-  gap:12px;
-}
-.desktop-shortcut {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-  width:88px;
-  border-radius:14px;
-  padding:12px 4px;
-  background:transparent;
-  font-size:11px;
-  color:#bccbd5;
-}
-.desktop-shortcut:hover {
-  background:#ffffff08;
 }
 .app-icon {
   width:48px;
@@ -213,18 +125,6 @@ a {
 .amber {
   color:#f3d394;
   background:linear-gradient(145deg,#66583e,#453e33);
-}
-.desktop-footnote {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-top:40px;
-  font-size:10px;
-  color:#718c98;
-}
-.desktop-footnote .icon {
-  width:15px;
-  height:15px;
 }
 .taskbar {
   position:fixed;
@@ -630,27 +530,8 @@ button,input,select {
   background:transparent;
 }
 @media(min-width:1600px) {
-  .desktop-welcome {
-    left:9%;
-  }
 }
 @media(max-width:850px) {
-  .brand-caption {
-    display:none;
-  }
-  .desktop-welcome {
-    left:6%;
-    top:35px;
-  }
-  .desktop-welcome h1 {
-    font-size:30px;
-  }
-  .desktop-welcome>p {
-    margin-bottom:18px;
-  }
-  .desktop-footnote {
-    margin-top:20px;
-  }
 }
 @media(max-width:560px) {
   .desktop-header {
@@ -660,15 +541,6 @@ button,input,select {
   .brand img {
     width:34px;
     height:34px;
-  }
-  .brand>span:first-of-type {
-    font-size:25px;
-  }
-  .header-actions {
-    gap:13px;
-  }
-  .local-badge {
-    font-size:9px;
   }
   #workspace {
     top:68px;
@@ -695,15 +567,6 @@ button,input,select {
   .app-window {
     border-radius:11px;
   }
-  .desktop-welcome {
-    top:25px;
-  }
-  .desktop-welcome h1 {
-    font-size:27px;
-  }
-  .desktop-shortcuts {
-    gap:4px;
-  }
   .clock {
     min-width:52px;
   }
@@ -722,3 +585,13 @@ button,input,select {
     animation:none!important;
   }
 }
+
+.about-identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 6px 0 24px;
+}
+.about-identity h2 { margin: 0 0 6px; font-size: 30px; }
+.about-identity span { color: #91a9b7; font-size: 11px; }
+.about-links { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-top: 24px; }

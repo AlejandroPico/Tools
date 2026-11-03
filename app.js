@@ -23,9 +23,9 @@ const manager = new DesktopWindows(windows => {
 });
 
 for (const app of apps) {
-  for (const target of ['#shortcuts', '#dock', '#launcher-apps']) {
+  for (const target of ['#dock', '#launcher-apps']) {
     const button = document.createElement('button');
-    button.className = target === '#dock' ? 'dock-app' : target === '#shortcuts' ? 'desktop-shortcut' : 'launcher-app';
+    button.className = target === '#dock' ? 'dock-app' : 'launcher-app';
     button.title = `Abrir ${app.name}`;
     button.innerHTML = `<span class="app-icon ${app.color}">${icon(app.icon)}</span>${target === '#dock' ? '' : `<span class="app-label">${app.name}${target === '#launcher-apps' ? `<small>${app.description}</small>` : ''}</span>`}`;
     if (target === '#dock') button.dataset.dock = app.id;

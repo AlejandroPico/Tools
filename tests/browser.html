@@ -5,9 +5,11 @@
 const html = await (await fetch('../index.html')).text();
 const documentSource = new DOMParser().parseFromString(html, 'text/html');
 document.body.replaceChildren(...documentSource.body.childNodes);
-document.querySelector('.brand img').src = '../favicon.svg';
-document.querySelector('.brand').href = '../';
-document.querySelector('.local-badge').textContent = 'PRUEBA · Audio sintético';
+document.querySelector('#about-dialog img').src = '../favicon.svg';
+const testLabel = document.createElement('span');
+testLabel.textContent = 'PRUEBA · Audio sintético';
+testLabel.style.cssText = 'position:fixed;top:18px;left:24px;font-size:11px;color:#9ce4c4;z-index:10001';
+document.body.append(testLabel);
 const params = new URLSearchParams(location.search);
 Object.defineProperty(navigator.mediaDevices, 'getUserMedia', { configurable: true, value: async () => {
   if (params.has('deny')) throw new DOMException('Denegado en prueba', 'NotAllowedError');

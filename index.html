@@ -23,17 +23,9 @@
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
   </defs></svg>
   <header class="desktop-header">
-    <a class="brand" href="./" aria-label="Tools, inicio"><img src="./favicon.svg" alt="" width="42" height="42"><span>tools<span class="brand-dot">.</span></span><span class="brand-caption">UN ESCRITORIO. MUCHAS SOLUCIONES.</span></a>
-    <div class="header-actions"><span class="local-badge"><span></span> En tu dispositivo</span><button class="quiet-button" id="help-button" aria-label="Acerca de Tools">?</button></div>
+    <button class="quiet-button" id="help-button" aria-label="Acerca de Tools" title="Acerca de Tools">?</button>
   </header>
   <main id="workspace" aria-label="Escritorio de herramientas">
-    <section class="desktop-welcome" aria-label="Bienvenida">
-      <span class="eyebrow">TU CAJA DE HERRAMIENTAS</span>
-      <h1>Pequeñas herramientas.<br>Muchas posibilidades.</h1>
-      <p>Abre una, o varias.<br>Este espacio es tuyo.</p>
-      <div class="desktop-shortcuts" id="shortcuts"></div>
-      <span class="desktop-footnote"><svg class="icon"><use href="#i-shield"/></svg> Sin cuentas. Sin subir tus archivos.</span>
-    </section>
     <div id="windows"></div>
   </main>
   <footer class="taskbar">
@@ -43,7 +35,7 @@
     <div class="taskbar-right"><span id="window-count">Tu espacio de trabajo</span><div class="clock"><time id="clock-time"></time><span id="clock-date"></span></div></div>
   </footer>
   <section id="launcher" class="launcher" aria-label="Todas las herramientas" hidden><div class="launcher-heading"><strong>Tus herramientas</strong><span>3 aplicaciones · 100 % en tu navegador</span></div><div id="launcher-apps"></div></section>
-  <dialog id="about-dialog" class="about-dialog"><form method="dialog"><button class="dialog-close quiet-button" aria-label="Cerrar">×</button></form><img src="./favicon.svg" width="64" height="64" alt=""><h2>Un pequeño escritorio.<br>A tu manera.</h2><p>Tools reúne herramientas gratuitas que funcionan en tu navegador. Los cálculos, archivos y grabaciones se procesan en este dispositivo.</p><p>Arrastra las ventanas por la barra superior y cambia su tamaño desde la esquina inferior derecha. Con la barra enfocada, usa las flechas para mover y Mayús + flechas para redimensionar.</p><p>«Guardar como…» permite elegir un archivo cuando el navegador lo admite. Con «Descargar», la ubicación depende de tus ajustes de descargas.</p><a href="https://github.com/AlejandroPico/Tools" target="_blank" rel="noopener noreferrer">Ver el proyecto en GitHub ↗</a></dialog>
+  <dialog id="about-dialog" class="about-dialog"><form method="dialog"><button class="dialog-close quiet-button" aria-label="Cerrar">×</button></form><div class="about-identity"><img src="./favicon.svg" width="64" height="64" alt=""><div><h2>Tools</h2><span>Por Alejandro Pico</span></div></div><p>Herramientas gratuitas que funcionan en tu navegador. Los cálculos, archivos y grabaciones se procesan en este dispositivo.</p><p>Arrastra las ventanas por la barra superior y cambia su tamaño desde la esquina inferior derecha. Con la barra enfocada, usa las flechas para mover y Mayús + flechas para redimensionar.</p><p>«Guardar como…» permite elegir un archivo cuando el navegador lo admite. Con «Descargar», la ubicación depende de tus ajustes de descargas.</p><nav class="about-links" aria-label="Enlaces del proyecto"><a href="https://alejandropico.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">Mi portfolio ↗</a><a href="https://github.com/AlejandroPico/Tools" target="_blank" rel="noopener noreferrer">Repositorio en GitHub ↗</a></nav></dialog>
   <div id="toast" role="status" aria-live="polite" hidden></div>
   <noscript>Activa JavaScript para utilizar las herramientas de este escritorio.</noscript>
 </body>

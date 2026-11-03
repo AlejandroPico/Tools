@@ -55,7 +55,7 @@ npm test
 npm run build
 ```
 
-La compilación prepara `dist/`. La raíz también puede publicarse directamente en GitHub Pages, con `main` y la carpeta raíz como origen. Las rutas son relativas y funcionan bajo `/Tools/`. GitHub Actions ejecuta las pruebas y la preparación del sitio con cada cambio en `main`.
+La compilación prepara `dist/`. GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
 
 ## Estructura
 

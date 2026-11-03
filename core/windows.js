@@ -33,8 +33,7 @@ export class DesktopWindows {
     const width = Math.min(app.width, this.workspace.clientWidth - 16);
     const height = Math.min(app.height, this.workspace.clientHeight - 16);
     const offset = this.windows.size * 36;
-    const wide = this.workspace.clientWidth > 1000;
-    const left = wide ? Math.max(300, (this.workspace.clientWidth - width) * .57 + offset) : (this.workspace.clientWidth - width) / 2;
+    const left = (this.workspace.clientWidth - width) / 2 + offset;
     Object.assign(element.style, { width: `${width}px`, height: `${height}px`, left: `${left}px`, top: `${Math.max(8, 20 + offset)}px` });
     const win = { app, element, maximized: false, controller: null };
     this.windows.set(app.id, win);
