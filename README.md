@@ -24,7 +24,8 @@ El acceso directo a carpetas depende del navegador; se ofrece selección de carp
 
 ## Ventanas y teclado
 
-- Arrastra la barra superior para mover una ventana; arrastra su esquina inferior derecha para redimensionarla.
+- El escritorio arranca siempre vacío. Abre aplicaciones desde Inicio; la barra inferior solo muestra las ventanas abiertas, Inicio y el reloj, sin accesos fijados ni recuentos.
+- Arrastra la barra superior para mover una ventana hasta cualquier borde del escritorio; arrastra cualquiera de sus bordes o esquinas para redimensionarla. La esquina inferior derecha muestra un tirador visible.
 - Usa los botones de minimizar, maximizar/restaurar y cerrar. Recupera una ventana desde la barra inferior.
 - Haz doble clic en la barra superior para maximizar o restaurar.
 - Con la barra superior enfocada: flechas para mover y Mayús + flechas para ajustar el tamaño.
@@ -32,9 +33,17 @@ El acceso directo a carpetas depende del navegador; se ofrece selección de carp
 
 Las ventanas se ajustan al espacio disponible; su contenido puede desplazarse cuando se reduce el tamaño.
 
+## Personalizar el escritorio
+
+Pulsa el botón derecho sobre el fondo para abrir el menú propio del escritorio. Incluye acceso a las aplicaciones, organización de ventanas en cascada o mosaico, **Propiedades del escritorio** y, como última opción, **Acerca de Tools**. En pantallas táctiles, mantén pulsado un espacio vacío. También puedes abrirlo con la tecla de menú contextual o Mayús + F10.
+
+Las propiedades ofrecen **24 temas seleccionables**, ocho de mañana, ocho de tarde y ocho de noche, que cambian el fondo y los colores de las ventanas. El tema elegido y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
+
+El área de escritorio ocupa toda la pantalla. La barra está pegada abajo; una ventana movida hasta el borde inferior puede quedar parcialmente detrás de ella. Al maximizar se utiliza el espacio por encima de la barra.
+
 ## Tus datos y tus archivos
 
-El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Solo el historial de cálculos se conserva entre sesiones, mediante almacenamiento local del navegador; puede perderse si borras los datos del sitio.
+El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. El historial de cálculos, el tema y la geometría de las ventanas se conservan entre sesiones mediante almacenamiento local del navegador; pueden perderse si borras los datos del sitio. Las grabaciones y los archivos abiertos no se guardan automáticamente entre sesiones.
 
 **Guardar como…** abre un selector para elegir el archivo de destino cuando existe soporte. **Descargar** utiliza la configuración del navegador: podrá preguntar la ubicación o usar tu carpeta de descargas. Tools no puede imponer ese ajuste.
 

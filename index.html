@@ -8,6 +8,7 @@
   <title>Tools · Tu escritorio de herramientas</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./core/desktop.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -21,21 +22,29 @@
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m14 5-7 7 7 7M7 12h14"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v6c0 5-8 11-8 11S4 16 4 11V5Zm-4 9 3 3 5-6"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1-3.7 1.5 1.5 0 0 1 1-2.8h2A4 4 0 0 0 21 11a9 9 0 0 0-9-8Z"/><circle cx="7.5" cy="10" r=".7"/><circle cx="11" cy="6.5" r=".7"/><circle cx="16" cy="8" r=".7"/></symbol>
   </defs></svg>
-  <header class="desktop-header">
-    <button class="quiet-button" id="help-button" aria-label="Acerca de Tools" title="Acerca de Tools">?</button>
-  </header>
-  <main id="workspace" aria-label="Escritorio de herramientas">
+  <main id="workspace" aria-label="Escritorio de herramientas. Botón derecho para abrir el menú del escritorio." tabindex="0">
     <div id="windows"></div>
   </main>
   <footer class="taskbar">
     <button class="launcher-toggle" id="launcher-toggle" title="Todas las herramientas" aria-label="Todas las herramientas" aria-expanded="false" aria-controls="launcher"><svg class="icon"><use href="#i-grid"/></svg></button>
     <span class="taskbar-divider"></span>
     <nav id="dock" aria-label="Aplicaciones"></nav>
-    <div class="taskbar-right"><span id="window-count">Tu espacio de trabajo</span><div class="clock"><time id="clock-time"></time><span id="clock-date"></span></div></div>
+    <div class="taskbar-right"><div class="clock"><time id="clock-time"></time><span id="clock-date"></span></div></div>
   </footer>
   <section id="launcher" class="launcher" aria-label="Todas las herramientas" hidden><div class="launcher-heading"><strong>Tus herramientas</strong><span>3 aplicaciones · 100 % en tu navegador</span></div><div id="launcher-apps"></div></section>
-  <dialog id="about-dialog" class="about-dialog"><form method="dialog"><button class="dialog-close quiet-button" aria-label="Cerrar">×</button></form><div class="about-identity"><img src="./favicon.svg" width="64" height="64" alt=""><div><h2>Tools</h2><span>Por Alejandro Pico</span></div></div><p>Herramientas gratuitas que funcionan en tu navegador. Los cálculos, archivos y grabaciones se procesan en este dispositivo.</p><p>Arrastra las ventanas por la barra superior y cambia su tamaño desde la esquina inferior derecha. Con la barra enfocada, usa las flechas para mover y Mayús + flechas para redimensionar.</p><p>«Guardar como…» permite elegir un archivo cuando el navegador lo admite. Con «Descargar», la ubicación depende de tus ajustes de descargas.</p><nav class="about-links" aria-label="Enlaces del proyecto"><a href="https://alejandropico.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">Mi portfolio ↗</a><a href="https://github.com/AlejandroPico/Tools" target="_blank" rel="noopener noreferrer">Repositorio en GitHub ↗</a></nav></dialog>
+  <div id="desktop-menu" class="desktop-menu" role="menu" aria-label="Menú del escritorio" hidden>
+    <button role="menuitem" data-desktop-action="apps"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>Abrir aplicaciones</button>
+    <div role="separator"></div>
+    <button role="menuitem" data-arrange="cascade">Ventanas en cascada</button>
+    <button role="menuitem" data-arrange="tile">Ventanas en mosaico</button>
+    <div role="separator"></div>
+    <button role="menuitem" data-desktop-action="properties"><svg class="icon" aria-hidden="true"><use href="#i-palette"/></svg>Propiedades del escritorio…</button>
+    <div role="separator"></div>
+    <button role="menuitem" data-desktop-action="about">Acerca de Tools</button>
+  </div>
+  <dialog id="about-dialog" class="about-dialog"><form method="dialog"><button class="dialog-close quiet-button" aria-label="Cerrar">×</button></form><div class="about-identity"><img src="./favicon.svg" width="64" height="64" alt=""><div><h2>Tools</h2><span>Por Alejandro Pico</span></div></div><p>Herramientas gratuitas que funcionan en tu navegador. Los cálculos, archivos y grabaciones se procesan en este dispositivo.</p><p>Abre las aplicaciones desde Inicio. Arrastra sus ventanas por la barra superior y cambia el tamaño desde cualquier borde o esquina. Con la barra enfocada, usa las flechas para mover y Mayús + flechas para redimensionar.</p><p>Personaliza los colores con el botón derecho sobre el escritorio y «Propiedades del escritorio». El tema y el tamaño de las ventanas se guardan en este navegador.</p><p>«Guardar como…» permite elegir un archivo cuando el navegador lo admite. Con «Descargar», la ubicación depende de tus ajustes de descargas.</p><nav class="about-links" aria-label="Enlaces del proyecto"><a href="https://alejandropico.github.io/Portfolio/" target="_blank" rel="noopener noreferrer">Mi portfolio ↗</a><a href="https://github.com/AlejandroPico/Tools" target="_blank" rel="noopener noreferrer">Repositorio en GitHub ↗</a></nav></dialog>
   <div id="toast" role="status" aria-live="polite" hidden></div>
   <noscript>Activa JavaScript para utilizar las herramientas de este escritorio.</noscript>
 </body>

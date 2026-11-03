@@ -12,7 +12,7 @@ Separar tres responsabilidades:
 - **Servicios comunes:** almacenamiento, importación/exportación, comprobación de capacidades y gestión de errores.
 - **Herramientas:** interfaz, estado y operaciones propias de cada utilidad.
 
-Cada herramienta tiene una carpeta en `tools/` y se registra en `app.js` con identificador, nombre, descripción, icono, dimensiones y función de apertura. La apertura puede devolver una función de limpieza y una comprobación de trabajo sin guardar. Los enlaces `#calculator`, `#audio-recorder` y `#file-explorer` abren directamente cada utilidad. La carga diferida de bibliotecas grandes se incorporará cuando hagan falta.
+Cada herramienta tiene una carpeta en `tools/` y se registra en `app.js` con identificador, nombre, descripción, icono, dimensiones y función de apertura. La apertura puede devolver una función de limpieza y una comprobación de trabajo sin guardar. El escritorio siempre arranca vacío, incluso con un fragmento en la URL; Inicio permite abrir las utilidades. La carga diferida de bibliotecas grandes se incorporará cuando hagan falta.
 
 Usar rutas de recursos compatibles con `/Tools/`, sin asumir alojamiento en la raíz del dominio. El código de cada herramienta debe poder evolucionar sin modificar las demás.
 
