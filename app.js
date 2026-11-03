@@ -95,5 +95,5 @@ function updateClock() {
   clock.dateTime = now.toISOString();
   document.querySelector('#clock-date').textContent = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short' }).format(now);
 }
-updateClock(); setInterval(updateClock, 15000);
+updateClock(); setInterval(updateClock, 1000);
 // Every visit starts with an empty desktop. Only geometry and preferences persist.
