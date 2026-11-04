@@ -180,7 +180,7 @@ npm test
 npm run build
 ```
 
-La compilación prepara las bibliotecas en `vendor/` y el sitio completo en `dist/`. `vendor/` se genera, no se versiona, y contiene también el motor del visor, sus fuentes y decodificadores, y el motor local de voz. Los scripts de instalación nativos se omiten porque el sitio usa las versiones para navegador. La web publicada utiliza estos archivos locales y no carga bibliotecas desde CDN. Consulta [dependencias y licencias](THIRD-PARTY.md). GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
+La compilación prepara las bibliotecas en `vendor/` y el sitio completo en `dist/`. Añade una versión común a las referencias de módulos y estilos para evitar mezclar archivos de distintas entregas en la caché del navegador. `vendor/` se genera, no se versiona, y contiene también el motor del visor, sus fuentes y decodificadores, y el motor local de voz. Los scripts de instalación nativos se omiten porque el sitio usa las versiones para navegador. La web publicada utiliza estos archivos locales y no carga bibliotecas desde CDN. Consulta [dependencias y licencias](THIRD-PARTY.md). GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
 
 ## Estructura
 
