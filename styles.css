@@ -7,6 +7,9 @@
 @import url('./core/workbench.css');
 @import url('./tools/image/styles.css');
 @import url('./tools/design/styles.css');
+@import url('./tools/utilities/styles.css');
+@import url('./tools/file-explorer/workbench.css');
+@import url('./tools/pdf/styles.css');
 :root {
   font-family:Inter,"Segoe UI",system-ui,sans-serif;
   color:#e9eef1;

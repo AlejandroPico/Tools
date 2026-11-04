@@ -6,7 +6,7 @@ Un pequeño escritorio de herramientas gratuitas en el navegador. Abre varias ap
 
 ## Aplicaciones disponibles
 
-Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Los seis primeros bloques se reúnen en **Bloc de notas**, **Reloj**, **Calculadora**, **Datos**, **Imagen** y **Diseño**. También están disponibles Archivos y Grabadora.
+Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Los nueve primeros bloques se reúnen en aplicaciones con funciones agrupadas. También está disponible la Grabadora básica.
 
 ### Bloc de notas
 
@@ -57,6 +57,20 @@ Genera degradados lineales de 2 a 8 paradas con ángulo y posiciones, con export
 
 Datos y Diseño tienen un selector **Al guardar** para elegir destino o descargar directamente. Sus entradas y ajustes se guardan como borradores locales. Las imágenes utilizadas como referencia en el cuentagotas permanecen en memoria durante la sesión; la paleta extraída sí se conserva.
 
+### Utilidades
+
+Generador criptográfico de contraseñas con longitud, grupos de caracteres, opción para evitar caracteres parecidos, mostrar/ocultar, copiar y guardar TXT. No guarda contraseñas como borradores. Números enteros aleatorios con límites incluidos, repetición opcional y hasta 10.000 resultados; selección sin sesgo mediante rechazo. Sorteos desde una lista de nombres, con unificación opcional de duplicados y exportación del resultado.
+
+Genera QR de texto UTF-8 y enlaces, con niveles L/M/Q/H, margen de lectura y salida SVG/PNG. Incluye códigos de barras Code 128, Code 39, EAN-13, EAN-8, UPC-A e ITF-14; calcula o valida la cifra de control en los formatos numéricos. Los códigos utilizan fondo blanco para mantener su lectura. El contenido y los resultados de Utilidades permanecen en memoria hasta cerrar la ventana.
+
+### PDF
+
+Visor local con zoom, navegación y vista de la copia preparada. Añade varios PDF a una lista común, selecciona páginas con casillas o rangos, reordena mediante arrastre o botones, gira la selección y deshaz la organización. **Un PDF** une o extrae las páginas seleccionadas en el orden mostrado; **Un PDF por página** las separa en documentos individuales dentro de un ZIP. También convierte imágenes a PDF con A4 de orientación automática o tamaño original a 96 ppp, proporción conservada y márgenes configurables.
+
+Primero prepara el resultado, revísalo y después guárdalo o descárgalo. La entrada se limita a 50 MiB en total y 500 páginas; la salida PDF a 100 MiB. Las imágenes respetan los límites del editor Imagen. Los archivos permanecen en la ventana hasta cerrarla; no se guardan copias automáticas de los PDF en el navegador. Se avisa antes de descartar una organización o resultado sin exportar.
+
+Los formularios AcroForm y las firmas requieren activar explícitamente **Convertir formularios y firmas a copia estática** antes de exportar: los campos dejan de ser interactivos y las firmas no conservan su validez. Los originales permanecen intactos. No se admiten PDF cifrados, XFA ni formularios con widgets no vinculados correctamente. Las copias contienen páginas; no se mantiene la estructura de marcadores del documento original. No incluye OCR, edición de texto PDF ni firma digital.
+
 ### Grabadora de audio
 
 Graba desde el micrófono, muestra la onda de audio, permite pausar, reanudar, escuchar el resultado y ponerle nombre. Ofrece **Guardar como…** en navegadores compatibles y **Descargar** como alternativa. El archivo usa el formato que admita el navegador, como WebM/Opus, Ogg o M4A; no se promete MP3.
@@ -72,6 +86,16 @@ Con acceso directo a carpetas permite **copiar y pegar archivos**, crear carpeta
 Recuerda la carpeta y subcarpeta mediante identificadores guardados en IndexedDB. Al abrir Archivos restaura esa ubicación si el permiso sigue vigente; si no, muestra **Volver a conectar**. La primera selección es obligatoria: una web no puede descubrir libremente el disco ni la ruta completa `C:\…`. La ruta visible comienza en la carpeta autorizada. Referencia: [File System Access](https://developer.chrome.com/docs/capabilities/web-apis/file-system-access).
 
 El acceso directo a carpetas depende del navegador; se ofrece selección de carpeta mediante archivos como alternativa. En carpetas abiertas con la API de directorios se muestran hasta 2000 elementos por nivel. La vista de texto se limita a los primeros 200 KB, mientras que la descarga conserva el archivo completo. Los documentos HTML se muestran como texto.
+
+Archivos también incluye estas pestañas:
+
+- **ZIP:** añadir archivos o una carpeta, editar rutas internas, comprimir, inspeccionar y extraer. Guarda archivos individuales o extrae todo dentro de una carpeta nueva autorizada. Límite de 2.000 entradas y 100 MiB comprimidos/descomprimidos; ZIP estándar sin cifrar, métodos Almacenar/Deflate. No admite ZIP64, varios discos, enlaces simbólicos ni nombres no ASCII sin UTF-8. Valida rutas, colisiones, tamaños y CRC antes de entregar archivos extraídos. La extracción se ejecuta en un Worker cancelable.
+- **Comparar:** comparación por bytes de dos archivos de hasta 200 MiB, primera posición diferente, recuento y hasta 100 diferencias, vistas de texto parciales e informe TXT.
+- **Hexadecimal:** edición de una copia en memoria de hasta 16 MiB, posición decimal/hexadecimal, cambio de bytes, pegado de bloques de hasta 64 KiB, deshacer/rehacer y exportación. No altera el original.
+- **SHA-256:** cálculo local hasta 100 MiB, comparación con una huella esperada, copia y archivo `.sha256`.
+- **Crear archivo:** ceros, byte repetido o contenido aleatorio criptográfico hasta 32 MiB, o texto UTF-8 de hasta 5 millones de caracteres. Preparación y guardado de una copia local.
+
+Los archivos abiertos, los ZIP y las copias binarias permanecen en memoria hasta cerrar Archivos. No sustituyen a los archivos de tu disco; guarda los resultados que quieras conservar.
 
 ## Ventanas y teclado
 
@@ -90,7 +114,7 @@ Ventanas, paneles, campos y botones tienen esquinas rectas. Solo los marcos de i
 
 Pulsa el botón derecho sobre el fondo para abrir el menú propio del escritorio. Incluye acceso a las aplicaciones, organización de ventanas en cascada o mosaico, **Propiedades del escritorio** y, como última opción, **Acerca de Tools**. En pantallas táctiles, mantén pulsado un espacio vacío. También puedes abrirlo con la tecla de menú contextual o Mayús + F10.
 
-Las propiedades ofrecen **32 temas seleccionables**, ocho por categoría: mañana, tarde, noche y **Mate**, que cambian el fondo y los colores de las ventanas. Los ocho Mate son fondos sólidos sin degradados, sombras ni efectos de brillo: Negro OLED, Grafito mate, Carbón, Azul mate, Verde mate, Ciruela mate, Arena mate y Blanco mate. **Negro OLED utiliza #000000 tanto en el fondo como en los paneles**, manteniendo controles y texto legibles.
+Las propiedades ofrecen **32 temas seleccionables**, ocho por categoría: mañana, tarde, noche y **Mate**, que cambian el fondo y los colores de las ventanas. Los ocho Mate son fondos sólidos sin degradados, sombras ni efectos de brillo: Negro, Grafito, Carbón, Azul, Verde, Ciruela, Arena y Blanco. **Negro utiliza #000000 tanto en el fondo como en los paneles**, manteniendo controles y texto legibles.
 
 El tema elegido y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
 
@@ -106,9 +130,10 @@ El micrófono requiere HTTPS o localhost y permiso del navegador, solicitado al 
 
 ## Ejecutar en local
 
-Requiere Node.js 22 o posterior, sin dependencias de terceros:
+Requiere Node.js 22.16 o posterior. Instala las versiones fijadas y arranca la vista local:
 
 ```sh
+npm ci
 npm start
 ```
 
@@ -119,7 +144,7 @@ npm test
 npm run build
 ```
 
-La compilación prepara `dist/`. GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
+La compilación prepara las bibliotecas en `vendor/` y el sitio completo en `dist/`. `vendor/` se genera, no se versiona, y contiene también el motor del visor, sus fuentes y decodificadores. La web publicada utiliza estos archivos locales y no carga bibliotecas desde CDN. Consulta [dependencias y licencias](THIRD-PARTY.md). GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
 
 ## Estructura
 
@@ -136,7 +161,9 @@ tools/
   image/                    Dibujo y edición de imágenes
   design/                   Colores, degradados y SVG
   audio-recorder/           Grabadora, formatos y estilos
-  file-explorer/            Explorador, modelo y estilos
+  file-explorer/            Explorador, ZIP y herramientas binarias
+  utilities/                Contraseñas, códigos, números y sorteos
+  pdf/                      Visor y organización local de PDF
 tests/                      Pruebas y archivos de ejemplo
 scripts/                    Servidor local y preparación del sitio
 ```
@@ -145,7 +172,7 @@ Cada herramienta vive en su propia carpeta dentro de `tools/`. El trabajo se rea
 
 ## Desarrollo y próximos pasos
 
-La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. `tests/creative.html` comprueba limpieza de SVG, imágenes y Worker de datos con una imagen de ejemplo. Las páginas de prueba no se incluyen en `dist/`.
+La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. `tests/creative.html` comprueba limpieza de SVG, imágenes y Worker de datos con una imagen de ejemplo. `node scripts/qa-fixtures.mjs` prepara archivos propios de prueba en `.local/qa789/` para verificar ZIP, bytes, PDF y formularios sin usar documentos personales. Las páginas de prueba no se incluyen en `dist/`.
 
 ## Licencia
 

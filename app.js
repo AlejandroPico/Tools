@@ -3,17 +3,21 @@ import { icon } from './core/ui.js';
 import { initializeDesktop } from './core/desktop.js';
 import { mountCalculator } from './tools/calculator/app.js';
 import { mountRecorder } from './tools/audio-recorder/app.js';
-import { mountExplorer } from './tools/file-explorer/app.js';
+import { mountFiles } from './tools/file-explorer/workbench.js';
 import { mountNotepad } from './tools/notepad/app.js';
 import { mountClock } from './tools/clock/app.js';
 import { mountData } from './tools/data/app.js';
 import { mountImage } from './tools/image/app.js';
 import { mountDesign } from './tools/design/app.js';
+import { mountUtilities } from './tools/utilities/app.js';
+import { mountPDF } from './tools/pdf/app.js';
 import { createClockService, installClockAlerts } from './tools/clock/service.js';
 
 const clockService = createClockService();
 
 const apps = [
+  { id: 'utilities', name: 'Utilidades', category: 'Utilidades', description: 'Contraseñas, QR, códigos de barras, números aleatorios y sorteos.', icon: 'utilities', color: 'mint', width: 900, height: 700, mount: mountUtilities },
+  { id: 'pdf', name: 'PDF', category: 'Documentos', description: 'Visor PDF, unir, separar, extraer, reordenar y girar páginas, imágenes a PDF.', icon: 'pdf', color: 'coral', width: 1100, height: 780, mount: mountPDF },
   { id: 'data', name: 'Datos', category: 'Datos', description: 'JSON, CSV, expresiones regulares, URL, Base64 y bases numéricas.', icon: 'data', color: 'mint', width: 940, height: 720, mount: mountData },
   { id: 'image', name: 'Imagen', category: 'Imagen', description: 'Dibujar, recortar, redimensionar y convertir imágenes PNG, JPEG y WebP.', icon: 'image', color: 'coral', width: 1040, height: 780, mount: mountImage },
   { id: 'design', name: 'Diseño', category: 'Diseño', description: 'Cuentagotas, paletas, contraste, degradados y editor SVG.', icon: 'palette', color: 'amber', width: 940, height: 720, mount: mountDesign },
@@ -21,7 +25,7 @@ const apps = [
   { id: 'clock', name: 'Reloj', category: 'Tiempo', description: 'Alarmas, cronómetro, temporizadores, Pomodoro, ciudades y calendario.', icon: 'clock', color: 'amber', width: 800, height: 680, mount: root => mountClock(root, clockService) },
   { id: 'calculator', name: 'Calculadora', category: 'Cálculo', description: 'Estándar, científica, gráfica, programador, fechas, edades y unidades.', icon: 'calculator', color: 'mint', width: 450, height: 680, mount: mountCalculator },
   { id: 'audio-recorder', name: 'Grabadora', category: 'Multimedia', description: 'Grabar, escuchar y descargar audio.', icon: 'mic', color: 'coral', width: 430, height: 570, mount: mountRecorder },
-  { id: 'file-explorer', name: 'Archivos', category: 'Archivos', description: 'Carpetas locales, navegación, archivos y copias.', icon: 'folder', color: 'amber', width: 860, height: 620, mount: mountExplorer },
+  { id: 'file-explorer', name: 'Archivos', category: 'Archivos', description: 'Explorador, ZIP, comparación, hexadecimal, SHA-256 y creación de archivos.', icon: 'folder', color: 'amber', width: 1000, height: 760, mount: mountFiles },
 ];
 
 const dock = document.querySelector('#dock');

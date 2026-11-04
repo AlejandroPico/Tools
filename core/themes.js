@@ -30,14 +30,14 @@ const palettes = {
     ['medianoche', 'Medianoche', '#111526', '#303b69', '#becbff', 230],
   ],
   'Mate': [
-    ['negro-oled', 'Negro OLED', '#000000', '#000000', '#c6c6c6', 0],
-    ['grafito', 'Grafito mate', '#111111', '#111111', '#cccccc', 0],
+    ['negro-oled', 'Negro', '#000000', '#000000', '#c6c6c6', 0],
+    ['grafito', 'Grafito', '#111111', '#111111', '#cccccc', 0],
     ['carbon', 'Carbón', '#1b1b1b', '#1b1b1b', '#cecece', 0],
-    ['azul', 'Azul mate', '#07111c', '#07111c', '#b4c4d2', 210],
-    ['verde', 'Verde mate', '#08140e', '#08140e', '#b7c9bc', 150],
-    ['ciruela', 'Ciruela mate', '#160e18', '#160e18', '#cbbbd0', 285],
-    ['arena', 'Arena mate', '#d7cbb4', '#d7cbb4', '#655b47', 40],
-    ['blanco', 'Blanco mate', '#ffffff', '#ffffff', '#454545', 0],
+    ['azul', 'Azul', '#07111c', '#07111c', '#b4c4d2', 210],
+    ['verde', 'Verde', '#08140e', '#08140e', '#b7c9bc', 150],
+    ['ciruela', 'Ciruela', '#160e18', '#160e18', '#cbbbd0', 285],
+    ['arena', 'Arena', '#d7cbb4', '#d7cbb4', '#655b47', 40],
+    ['blanco', 'Blanco', '#ffffff', '#ffffff', '#454545', 0],
   ],
 };
 

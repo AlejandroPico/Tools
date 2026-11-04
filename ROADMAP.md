@@ -12,9 +12,9 @@ Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan 
 | 4 | Datos y programación | JSON, CSV, expresiones regulares, bases numéricas, URL/Base64 | Primera versión disponible en Datos |
 | 5 | Imágenes | Paint, recortes, tamaño, formatos, compresión | Primera versión disponible en Imagen |
 | 6 | Diseño y colores | Cuentagotas, paletas, contraste, degradados, SVG | Primera versión disponible en Diseño |
-| 7 | Utilidades | Contraseñas, QR, códigos de barras, números aleatorios, sorteos | Pendiente |
-| 8 | Archivos | ZIP, comparación, hexadecimal, SHA-256, generación de archivos | Parcial: explorador, copias, carpetas y creación de TXT ya disponibles |
-| 9 | PDF | Visor, unir, separar, reordenar/rotar, imágenes a PDF | Pendiente |
+| 7 | Utilidades | Contraseñas, QR, códigos de barras, números aleatorios, sorteos | Primera versión disponible en Utilidades |
+| 8 | Archivos | ZIP, comparación, hexadecimal, SHA-256, generación de archivos | Primera versión disponible en Archivos, junto al explorador |
+| 9 | PDF | Visor, unir, separar, reordenar/rotar, imágenes a PDF | Primera versión disponible en PDF |
 | 10 | Capturas y cámara | Imagen de pantalla, vídeo de pantalla, foto/vídeo de webcam, grabadora con marcas | Pendiente; grabación básica de audio ya disponible |
 | 11 | Audio | Recortar, unir, convertir, reproducir con velocidad, tonos | Pendiente |
 | 12 | Voz y lectura | Transcripción, dictado, voz, subtítulos, teleprónter | Pendiente |
@@ -27,7 +27,7 @@ Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan 
 - Inicio con búsqueda, categorías y listado alfabético; barra con solo ventanas abiertas, Inicio y reloj.
 - Esquinas rectas en la interfaz, salvo los marcos de iconos.
 - Menú contextual, organización en cascada/mosaico y Acerca de como última opción.
-- 32 temas de mañana, tarde, noche y Mate, incluido Negro OLED #000000; preferencias y geometría locales.
+- 32 temas de mañana, tarde, noche y Mate, incluido Negro #000000; preferencias y geometría locales.
 - Exportación de archivos, borradores de notas, historial, estado del Reloj y borradores de Datos, Imagen y Diseño locales.
 - Pruebas automáticas y publicación mediante GitHub Actions desde main.
 

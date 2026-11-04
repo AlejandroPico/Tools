@@ -30,7 +30,7 @@ test('redimensionar un solo borde no desplaza los otros ejes', () => {
   assert.deepEqual(resizeRect(rect, 'e', 50, 90, bounds), { ...rect, width: 450 });
   assert.deepEqual(resizeRect(rect, 'n', 50, -30, bounds), { ...rect, top: 50, height: 330 });
 });
-test('32 temas únicos, ocho por categoría, con negro OLED puro', () => {
+test('32 temas únicos, ocho por categoría, con negro puro', () => {
   assert.equal(themes.length, 32);
   assert.equal(new Set(themes.map(theme => theme.id)).size, 32);
   for (const group of ['Mañana', 'Tarde', 'Noche', 'Mate']) assert.equal(themes.filter(theme => theme.group === group).length, 8);

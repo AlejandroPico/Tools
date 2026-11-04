@@ -1,6 +1,6 @@
 # Base técnica propuesta
 
-Documento de diseño y evolución. Ya existen escritorio, Bloc de notas, Reloj, Calculadora con modos, Datos, Imagen, Diseño, Grabadora y Archivos; las capacidades descritas como futuras siguen pendientes. El README describe el alcance disponible.
+Documento de diseño y evolución. Ya existen escritorio, Bloc de notas, Reloj, Calculadora con modos, Datos, Imagen, Diseño, Utilidades, PDF, Grabadora y Archivos; las capacidades descritas como futuras siguen pendientes. El README describe el alcance disponible.
 
 ## Aplicación estática y modular
 
@@ -65,3 +65,7 @@ Fuentes: [reconocimiento de voz](https://developer.mozilla.org/en-US/docs/Web/AP
 Al implementar, añadir comprobaciones de los cálculos y conversiones, persistencia tras recarga, importación/exportación y recuperación ante errores. Probar permisos, cancelación y liberación de dispositivos en las herramientas multimedia. Revisar teclado, foco, contraste y distribución móvil.
 
 GitHub Actions ejecuta las comprobaciones y prepara el sitio con cada cambio en `main`. La aplicación es estática y permite publicar la raíz directamente mediante GitHub Pages o el contenido de `dist/` con otro alojamiento estático. La existencia de una URL de Pages no sustituye la comprobación de la versión desplegada.
+
+## Bibliotecas locales y trabajo pesado
+
+Las funciones PDF, ZIP y de códigos usan versiones fijadas en package-lock.json. La compilación empaqueta pdf-lib, PDF.js, fflate, qrcode y JsBarcode dentro del sitio, con recursos y licencias. No se usan CDN. PDF y ZIP se procesan en Workers cancelables, con límites de tamaño. El visor dibuja páginas en canvas sin capa de acciones de documentos. Los archivos binarios y PDF permanecen en memoria hasta cerrar; los resultados se conservan mediante exportación. Véase [THIRD-PARTY.md](../THIRD-PARTY.md).

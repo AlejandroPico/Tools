@@ -7,7 +7,7 @@ export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
   applyTheme(currentTheme);
 
   function mountProperties(root) {
-    root.innerHTML = `<div class="desktop-properties"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>32 temas: mañana, tarde, noche y colores mate. Negro OLED utiliza un fondo negro puro. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></div>`;
+    root.innerHTML = `<div class="desktop-properties"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>32 temas: mañana, tarde, noche y colores mate. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></div>`;
     const groups = root.querySelector('.theme-groups');
     for (const group of ['Mañana', 'Tarde', 'Noche', 'Mate']) {
       const section = document.createElement('section');
