@@ -1,0 +1,20 @@
+import { localProject, backupButtons, bindBackup, saveSVG } from './local.js';
+import { validateBoard, boardSVG, nearStroke } from './model.js';
+export function mountBoard(panel,api) {
+  let tool = 'pen', color = '#17334b', width = 5, stroke = null, svg;
+  const project = localProject(panel,api,'board',{ strokes:[] },validateBoard,data => {
+    const body = panel.querySelector('.wb-body'); body.innerHTML = `<div class="wb-toolbar">${backupButtons}<button data-export="svg">Guardar pizarra SVG…</button><button data-export="png">Guardar pizarra PNG…</button><button data-board="clear">Vaciar pizarra</button></div><div class="wb-toolbar"><label>Herramienta<select class="board-tool"><option value="pen">Lápiz</option><option value="text">Texto</option><option value="erase">Borrar trazo</option></select></label><label>Color<input class="board-color" type="color"></label><label>Grosor<input class="board-width" type="number" min="1" max="80"></label><button data-board="text">Añadir texto en el centro</button></div><div class="drawing-stage"></div><p class="wb-help">Dibuja con el ratón o el dedo. Texto: pulsa sobre el papel; borrar elimina el trazo tocado. Documento de 1600 × 900, con deshacer y borrador local.</p>`;
+    const q = s => body.querySelector(s); bindBackup(panel,project); q('.board-tool').value = tool; q('.board-color').value = color; q('.board-width').value = width;
+    q('.board-tool').onchange = e => { tool = e.target.value; }; q('.board-color').oninput = e => { color = e.target.value; }; q('.board-width').onchange = e => { width = Math.max(1,Math.min(80,Number(e.target.value) || 5)); e.target.value = width; };
+    q('.drawing-stage').innerHTML = boardSVG(data); svg = q('.drawing-stage svg'); svg.setAttribute('aria-label','Pizarra de dibujo');
+    function paint() { const source = boardSVG({ strokes: [...data.strokes,...(stroke ? [stroke] : [])] }); svg.innerHTML = source.slice(source.indexOf('>') + 1,source.lastIndexOf('</svg>')); }
+    function point(e) { const rect = svg.getBoundingClientRect(); return [Math.max(0,Math.min(1600,(e.clientX-rect.left)*1600/rect.width)),Math.max(0,Math.min(900,(e.clientY-rect.top)*900/rect.height))]; }
+    function addText(x,y) { const text = prompt('Texto de la pizarra (hasta 1.000 caracteres):'); if (text?.trim()) project.change(next => next.strokes.push({ type:'text',text:text.slice(0,1000),color,width,points:[[x,y]] })); }
+    svg.onpointerdown = e => { if (e.button !== 0) return; e.preventDefault(); if (data.strokes.length >= 1000 && tool !== 'erase') return api.status('Límite de 1.000 trazos. Borra alguno o inicia otra pizarra.',true); const [x,y] = point(e); if (tool === 'text') return addText(x,y); if (tool === 'erase') { const index = data.strokes.findLastIndex(item => nearStroke(item,x,y)); if (index >= 0) project.change(next => next.strokes.splice(index,1)); return; } if (data.strokes.reduce((n,item)=>n+item.points.length,0) >= 40000) return api.status('La pizarra ha alcanzado 40.000 puntos.',true); stroke = { type:'pen',text:'',color,width,points:[[x,y]] }; svg.setPointerCapture(e.pointerId); paint(); };
+    svg.onpointermove = e => { if (!stroke) return; const p = point(e), last = stroke.points.at(-1); if (Math.hypot(p[0]-last[0],p[1]-last[1]) > 2 && stroke.points.length < Math.min(5000,40000-data.strokes.reduce((n,item)=>n+item.points.length,0))) { stroke.points.push(p); paint(); } };
+    function finish() { if (!stroke) return; const result = stroke; stroke = null; project.change(next => next.strokes.push(result)); }
+    svg.onpointerup = finish; svg.onpointercancel = finish;
+    q('[data-board=text]').onclick = () => addText(650,450); q('[data-board=clear]').onclick = () => { if (data.strokes.length && confirm('¿Vaciar la pizarra? Puedes deshacerlo.')) project.change(next => { next.strokes = []; }); };
+    for (const kind of ['svg','png']) q(`[data-export=${kind}]`).onclick = () => saveSVG(api,boardSVG(data),'pizarra',kind === 'png');
+  }); return { preventClose: () => !!stroke || project.preventClose(), destroy() { stroke = null; project.destroy(); } };
+}

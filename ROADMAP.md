@@ -15,17 +15,17 @@ Las 70 ideas iniciales se organizan en 14 familias de funciones, que se agrupan 
 | 7 | Utilidades | Contraseñas, QR, códigos de barras, números aleatorios, sorteos | Primera versión disponible en Utilidades |
 | 8 | Archivos | ZIP, comparación, hexadecimal, SHA-256, generación de archivos | Primera versión disponible en Archivos, junto al explorador |
 | 9 | PDF | Visor, unir, separar, reordenar/rotar, imágenes a PDF | Primera versión disponible en PDF |
-| 10 | Capturas y cámara | Imagen de pantalla, vídeo de pantalla, foto/vídeo de webcam, grabadora con marcas | Pendiente; grabación básica de audio ya disponible |
-| 11 | Audio | Recortar, unir, convertir, reproducir con velocidad, tonos | Pendiente |
-| 12 | Voz y lectura | Transcripción, dictado, voz, subtítulos, teleprónter | Pendiente |
-| 13 | Productividad | Tarjetas, pizarra, mapas mentales, tareas, diagramas | Pendiente |
-| 14 | Accesibilidad | Lupa, lectura, teclado, filtros, contraste/tamaño | Pendiente |
+| 10 | Capturas y cámara | Imagen de pantalla, vídeo de pantalla, foto/vídeo de webcam, grabadora con marcas | Primera versión disponible en Capturas y marcas en Grabadora |
+| 11 | Audio | Recortar, unir, convertir, reproducir con velocidad, tonos | Primera versión disponible |
+| 12 | Voz y lectura | Transcripción, dictado, voz, subtítulos, teleprónter | Primera versión disponible |
+| 13 | Productividad | Tarjetas, pizarra, mapas mentales, tareas, diagramas | Primera versión disponible |
+| 14 | Accesibilidad | Lupa, lectura, teclado, filtros, contraste/tamaño | Primera versión disponible |
 
 ## Base común ya disponible
 
 - Escritorio vacío al iniciar, ventanas movibles hasta los cuatro límites y tamaño ajustable por todos los bordes y esquinas.
 - Inicio con búsqueda, categorías y listado alfabético; barra con solo ventanas abiertas, Inicio y reloj.
-- Esquinas rectas en la interfaz, salvo los marcos de iconos.
+- Apariencias Tools, Windows, macOS y Ubuntu independientes del color. Tools conserva esquinas rectas; los sistemas usan sus convenciones de controles y bordes.
 - Menú contextual, organización en cascada/mosaico y Acerca de como última opción.
 - 32 temas de mañana, tarde, noche y Mate, incluido Negro #000000; preferencias y geometría locales.
 - Exportación de archivos, borradores de notas, historial, estado del Reloj y borradores de Datos, Imagen y Diseño locales.
@@ -45,5 +45,5 @@ Las siguientes entregas pueden ampliar las versiones existentes. Las funciones m
 
 - Elegir e incorporar una licencia libre.
 - Definir la instalación y el funcionamiento sin conexión.
-- Valorar modelos locales de transcripción por precisión, licencia, tamaño y rendimiento.
+- Ampliar la precisión del reconocimiento local; Whisper Tiny ya está disponible como descarga opcional.
 - Mantener separadas las funciones que exigen una aplicación nativa o extensión: acceso libre a todo el disco, alarmas con el navegador cerrado y control de otras aplicaciones no forman parte de una web estática.

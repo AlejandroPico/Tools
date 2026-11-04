@@ -1,0 +1,2 @@
+import { editPCM, encodeWAV, tonePCM } from './pcm.js';
+self.onmessage = ({ data }) => { try { const result = data.action === 'edit' ? { channels: editPCM(data.channels, data.rate, data.options) } : { bytes: encodeWAV(data.action === 'tone' ? tonePCM(data.frequency, data.duration, data.type, data.gain, data.rate) : data.channels, data.rate) }; self.postMessage({ result }, result.bytes ? [result.bytes.buffer] : result.channels.map(channel => channel.buffer)); } catch (error) { self.postMessage({ error: error.message }); } };

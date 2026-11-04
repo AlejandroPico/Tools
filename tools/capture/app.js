@@ -1,0 +1,35 @@
+import { workbench, pickFiles } from '../../core/workbench.js';
+import { MediaTake, stopStream, mediaError, mediaExtension } from '../../core/media.js';
+import { formatBytes } from '../../core/files.js';
+import { mountStill } from './still.js';
+
+export function mountCapture(root) {
+  return workbench(root, { screen: 'Pantalla', camera: 'Cámara' }, (mode, panel, api) => {
+    const screen = mode === 'screen';
+    panel.innerHTML = `<div class="wb-body"><div class="wb-toolbar"><button data-do="connect">${screen ? 'Elegir pantalla o ventana' : 'Encender cámara'}</button><button data-do="release" disabled>${screen ? 'Dejar de compartir' : 'Apagar cámara'}</button><label><input type="checkbox" data-setting="audio">${screen ? 'Solicitar audio de la fuente' : 'Incluir micrófono'}</label><label><input type="checkbox" data-setting="end" ${screen ? 'checked' : ''}>Finalizar vista al capturar imagen</label></div><video class="capture-live" muted playsinline aria-label="${screen ? 'Vista de la pantalla compartida' : 'Vista de la cámara'}" hidden></video><div class="wb-toolbar"><button data-do="photo" disabled>Capturar imagen</button><button data-do="record" disabled>Grabar vídeo</button><button data-do="pause" disabled>Pausar vídeo</button><button data-do="stop" disabled>Detener vídeo</button><output class="capture-time">00:00</output><button data-do="image">Abrir imagen para recortar</button></div><div class="capture-still"></div><section class="capture-result wb-card" hidden><strong>Vídeo grabado</strong><video controls playsinline aria-label="Reproducir vídeo grabado"></video><div class="wb-toolbar"><button data-do="save-video">Guardar vídeo…</button><span class="capture-size wb-help"></span></div></section><p class="wb-help">${screen ? 'El navegador te pedirá elegir una pestaña, ventana o pantalla. El audio disponible depende de la fuente elegida.' : 'La cámara y el micrófono solo se activan al pulsar Encender cámara. Apágalos o cierra la ventana para liberarlos.'} El vídeo utiliza el formato admitido por el navegador. Límite: 15 minutos o 150 MB. Las imágenes admiten selección y recorte antes de guardarlas.</p></div>`;
+    const q = s => panel.querySelector(s), video = q('.capture-live'), still = mountStill(q('.capture-still'), api);
+    let stream = null, take = null, disposed = false, requesting = false, clip = null, clipURL = null, exported = true, generation = 0;
+    function controls() { const active = !!stream?.getVideoTracks().some(track => track.readyState === 'live'), busy = take?.busy; q('[data-do=connect]').disabled = requesting || active || busy; q('[data-do=release]').disabled = !active; q('[data-do=photo]').disabled = !active || busy; q('[data-do=record]').disabled = !active || busy || !window.MediaRecorder; q('[data-do=pause]').disabled = !['recording','paused'].includes(take?.state); q('[data-do=pause]').textContent = take?.state === 'paused' ? 'Reanudar vídeo' : 'Pausar vídeo'; q('[data-do=stop]').disabled = !['recording','paused'].includes(take?.state); }
+    function release() { stopStream(stream); stream = null; video.srcObject = null; video.hidden = true; controls(); }
+    q('[data-do=connect]').onclick = async () => {
+      requesting = true; controls(); api.status(screen ? 'Elige qué quieres compartir.' : 'Esperando permiso de cámara…');
+      try { const audio = q('[data-setting=audio]').checked; const acquired = screen ? await navigator.mediaDevices.getDisplayMedia({ video: { frameRate: 30 }, audio }) : await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 1280 }, height: { ideal: 720 } }, audio }); if (disposed) { stopStream(acquired); return; } stream = acquired; video.srcObject = stream; video.hidden = false; await video.play(); stream.getVideoTracks().forEach(track => track.addEventListener('ended', () => { if (disposed) return; if (take?.busy) take.stop('La fuente ha finalizado.'); release(); api.status('La fuente ha dejado de compartir.'); }, { once: true })); api.status(screen ? 'Vista compartida lista. Captura una imagen o graba vídeo.' : 'Cámara lista. Puedes tomar una foto o grabar vídeo.'); }
+      catch (error) { release(); api.status(mediaError(error), true); } finally { requesting = false; if (!disposed) controls(); }
+    };
+    if (!(screen ? navigator.mediaDevices?.getDisplayMedia : navigator.mediaDevices?.getUserMedia)) { q('[data-do=connect]').hidden = true; api.status('Esta captura no está disponible en este navegador. Puedes abrir una imagen para recortarla.', true); }
+    q('[data-do=release]').onclick = () => { if (take?.busy) take.stop(); release(); api.status('Fuente liberada.'); };
+    q('[data-do=photo]').onclick = () => { try { still.fromImage(video); if (q('[data-setting=end]').checked) release(); } catch (error) { api.status(error.message, true); } };
+    q('[data-do=image]').onclick = async () => { const [file] = await pickFiles({ accept: 'image/*' }); if (!file || disposed) return; try { await still.open(file); } catch (error) { api.status(error.message, true); } };
+    q('[data-do=record]').onclick = () => {
+      if (!stream || take?.busy) return; if (clip && !exported && !window.confirm('El vídeo anterior no está guardado. ¿Crear otra grabación?')) return;
+      try { take?.destroy(); if (clipURL) URL.revokeObjectURL(clipURL); clip = null; q('.capture-result').hidden = true; exported = false;
+        take = new MediaTake(stream, { kind: 'video', onState() { if (!disposed) controls(); }, onTick(seconds) { q('.capture-time').textContent = `${String(Math.floor(seconds / 60)).padStart(2,'0')}:${String(Math.floor(seconds % 60)).padStart(2,'0')}`; }, onResult(result) { if (disposed) return; clip = result.blob; generation++; clipURL = URL.createObjectURL(clip); q('.capture-result video').src = clipURL; q('.capture-result').hidden = false; q('.capture-size').textContent = formatBytes(clip.size); release(); api.status(result.message || 'Vídeo preparado. Escúchalo o revísalo antes de guardarlo.'); }, onError(message) { api.status(message, true); } }); take.start(); controls(); api.status('Grabando vídeo. Puedes minimizar esta ventana.');
+      } catch (error) { api.status(mediaError(error), true); }
+    };
+    q('[data-do=pause]').onclick = () => { if (take?.state === 'paused') take.resume(); else take?.pause(); controls(); };
+    q('[data-do=stop]').onclick = () => take?.stop();
+    q('[data-do=save-video]').onclick = async () => { if (!clip) return; const token = generation, result = await api.save(clip, `${screen ? 'pantalla' : 'camara'}.${mediaExtension(clip.type)}`); if (token === generation && ['saved','downloaded'].includes(result)) exported = true; };
+    controls();
+    return { preventClose: () => requesting || take?.busy || !!clip && !exported || still.dirty, destroy() { disposed = true; take?.destroy(); release(); still.destroy(); const player = q('.capture-result video'); player.pause(); player.removeAttribute('src'); player.load(); if (clipURL) URL.revokeObjectURL(clipURL); clip = null; } };
+  }, { label: 'Capturas y cámara', help: 'Las capturas se crean y guardan en este dispositivo.' });
+}

@@ -1,0 +1,8 @@
+.window-content> *{zoom:var(--access-zoom,1)}
+[data-access-contrast=true]{--text:#fff!important;--muted:#fff!important;--panel:#000!important;--panel-strong:#000!important;--soft:#121212!important;--line:#fff!important;--window-border:#fff!important;--mint:#ffff00!important;--hover:#333!important;color:#fff!important}
+[data-access-filter=grayscale] :is(.app-window,.taskbar,.system-topbar,.launcher,.desktop-menu){filter:grayscale(1)}
+[data-access-filter=sepia] :is(.app-window,.taskbar,.system-topbar,.launcher,.desktop-menu){filter:sepia(1)}
+[data-access-filter=invert] :is(.app-window,.taskbar,.system-topbar,.launcher,.desktop-menu){filter:invert(1)}
+[data-access-motion=true] *,[data-access-motion=true] *:before,[data-access-motion=true] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+[data-access-focus=true] :focus-visible{outline:3px solid var(--mint)!important;outline-offset:2px}
+[data-access-cursor=true] *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='44' viewBox='0 0 36 44'%3E%3Cpath d='M3 2v34l9-9 7 15 7-4-7-14h14Z' fill='white' stroke='black' stroke-width='3'/%3E%3C/svg%3E") 3 2,auto!important}

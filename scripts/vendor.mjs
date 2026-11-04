@@ -14,6 +14,7 @@ const entries = {
   'fflate': "export * from 'fflate';",
   'qrcode': "export {default} from 'qrcode';",
   'barcode': "export {default} from 'jsbarcode';",
+  'transformers': "export {pipeline,env} from '@huggingface/transformers';",
 };
 await Promise.all(Object.entries(entries).map(([name, contents]) => build({
   stdin: { contents, resolveDir: root, sourcefile: `${name}-entry.js` },
@@ -21,6 +22,9 @@ await Promise.all(Object.entries(entries).map(([name, contents]) => build({
   target: 'es2022', minify: true, legalComments: 'eof',
 })));
 const pdf = path.join(root, 'node_modules/pdfjs-dist');
+const ort = path.join(root, 'node_modules/onnxruntime-web/dist');
+await mkdir(path.join(output, 'onnx'), { recursive: true });
+for (const file of await readdir(ort)) if (/^ort-wasm-simd-threaded(?:\.(?:jsep|asyncify|jspi))?\.(?:mjs|wasm)$/.test(file)) await cp(path.join(ort, file), path.join(output, 'onnx', file));
 await cp(path.join(pdf, 'build/pdf.worker.mjs'), path.join(output, 'pdf.worker.mjs'));
 for (const directory of ['cmaps', 'standard_fonts', 'wasm', 'iccs']) {
   await cp(path.join(pdf, directory), path.join(output, directory), { recursive: true }).catch(error => { if (error.code !== 'ENOENT') throw error; });

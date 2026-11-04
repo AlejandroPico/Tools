@@ -11,11 +11,22 @@ import { mountImage } from './tools/image/app.js';
 import { mountDesign } from './tools/design/app.js';
 import { mountUtilities } from './tools/utilities/app.js';
 import { mountPDF } from './tools/pdf/app.js';
+import { mountCapture } from './tools/capture/app.js';
+import { mountAudio } from './tools/audio/app.js';
+import { mountVoice } from './tools/voice/app.js';
+import { mountProductivity } from './tools/productivity/app.js';
+import { mountAccessibility } from './tools/accessibility/app.js';
+import { initializeAccess } from './core/accessibility.js';
 import { createClockService, installClockAlerts } from './tools/clock/service.js';
 
 const clockService = createClockService();
 
 const apps = [
+  { id: 'capture', name: 'Capturas', category: 'Multimedia', description: 'Capturar y recortar imágenes, grabar pantalla y cámara.', icon: 'camera', color: 'coral', width: 1000, height: 760, mount: mountCapture },
+  { id: 'audio', name: 'Audio', category: 'Multimedia', description: 'Recortar, unir y convertir audio, reproducir a otra velocidad y generar tonos.', icon: 'wave', color: 'amber', width: 1000, height: 760, mount: mountAudio },
+  { id: 'voice', name: 'Voz', category: 'Texto', description: 'Transcripción local, dictado, lectura, subtítulos y teleprónter.', icon: 'voice', color: 'coral', width: 1000, height: 760, mount: mountVoice },
+  { id: 'productivity', name: 'Productividad', category: 'Organización', description: 'Tareas, tarjetas, pizarra, mapas mentales y diagramas.', icon: 'board', color: 'mint', width: 1100, height: 780, mount: mountProductivity },
+  { id: 'accessibility', name: 'Accesibilidad', category: 'Accesibilidad', description: 'Lupa, lector, teclado en pantalla, filtros, contraste y tamaño de texto.', icon: 'access', color: 'amber', width: 960, height: 720, mount: mountAccessibility },
   { id: 'utilities', name: 'Utilidades', category: 'Utilidades', description: 'Contraseñas, QR, códigos de barras, números aleatorios y sorteos.', icon: 'utilities', color: 'mint', width: 900, height: 700, mount: mountUtilities },
   { id: 'pdf', name: 'PDF', category: 'Documentos', description: 'Visor PDF, unir, separar, extraer, reordenar y girar páginas, imágenes a PDF.', icon: 'pdf', color: 'coral', width: 1100, height: 780, mount: mountPDF },
   { id: 'data', name: 'Datos', category: 'Datos', description: 'JSON, CSV, expresiones regulares, URL, Base64 y bases numéricas.', icon: 'data', color: 'mint', width: 940, height: 720, mount: mountData },
@@ -30,6 +41,7 @@ const apps = [
 
 const dock = document.querySelector('#dock');
 const manager = new DesktopWindows(windows => {
+  document.querySelector('#system-active-app').textContent = windows.get(manager.activeId)?.app.name || 'Tools';
   for (const button of dock.querySelectorAll('[data-dock]')) {
     if (!windows.has(button.dataset.dock)) button.remove();
   }
@@ -94,7 +106,9 @@ launcherToggle.addEventListener('click', () => { if (launcher.hidden) openLaunch
 document.addEventListener('pointerdown', event => { if (!event.target.closest('#launcher, #launcher-toggle')) closeLauncher(); });
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !launcher.hidden) { closeLauncher(); launcherToggle.focus(); } });
 initializeDesktop({ manager, openLauncher, closeLauncher });
+initializeAccess();
 const clockApp = apps.find(app => app.id === 'clock');
+document.querySelector('#system-clock').addEventListener('click', () => { closeLauncher(); manager.open(clockApp); });
 document.querySelector('#taskbar-clock').addEventListener('click', () => { closeLauncher(); manager.open(clockApp); });
 installClockAlerts(clockService, () => manager.open(clockApp));
 
@@ -103,6 +117,7 @@ function updateClock() {
   const clock = document.querySelector('#clock-time');
   clock.textContent = new Intl.DateTimeFormat('es', { hour: '2-digit', minute: '2-digit' }).format(now);
   clock.dateTime = now.toISOString();
+  document.querySelector('#system-clock').textContent = new Intl.DateTimeFormat('es', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }).format(now);
   document.querySelector('#clock-date').textContent = new Intl.DateTimeFormat('es', { day: 'numeric', month: 'short' }).format(now);
 }
 updateClock(); setInterval(updateClock, 1000);

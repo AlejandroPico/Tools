@@ -3,7 +3,7 @@ import { saveFile, downloadFile, formatBytes } from '../../core/files.js';
 import { formatDuration, chooseAudioMime, recordingFilename } from './recording.js';
 
 export function mountRecorder(root) {
-  root.innerHTML = `<div class="recorder-shell"><div class="window-subheading"><strong>Una idea empieza aquí.</strong><span class="small-label">AUDIO</span></div><p class="recorder-intro">Graba, escucha y llévatelo contigo.</p><div class="recorder-visual"><span class="recorder-state"><span></span><span class="recorder-state-text">Listo para grabar</span></span><canvas width="700" height="150" aria-hidden="true"></canvas><output class="recorder-time" aria-label="Duración de la grabación">00:00</output><span class="recorder-caption">Tu micrófono. Tu grabación.</span></div><div class="recorder-controls"><button class="recorder-pause" aria-label="Pausar grabación" title="Pausar" disabled>Ⅱ</button><button class="recorder-record" aria-label="Iniciar grabación" title="Iniciar grabación" data-initial-focus><span></span></button><button class="recorder-stop" aria-label="Detener grabación" title="Detener" disabled><span></span></button></div><p class="recorder-status status-text" role="status">El micrófono solo se activa al pulsar grabar.</p><section class="recording-result" hidden aria-label="Grabación terminada"><div class="recording-result-heading"><strong>Tu grabación está lista</strong><span class="recording-size"></span></div><audio controls preload="metadata" aria-label="Escuchar grabación"></audio><label class="recording-name-label">Nombre del archivo<input class="recording-name" maxlength="120" aria-label="Nombre del archivo de audio"></label><div class="recording-downloads"><button class="primary-button recorder-save">${icon('download')} Guardar como…</button><button class="secondary-button recorder-download">Descargar</button></div></section><div class="recorder-privacy">${icon('shield')} El audio se queda aquí hasta que lo descargues.<br>No se envía a ningún servidor.</div></div>`;
+  root.innerHTML = `<div class="recorder-shell"><div class="window-subheading"><strong>Una idea empieza aquí.</strong><span class="small-label">AUDIO</span></div><p class="recorder-intro">Graba, escucha y llévatelo contigo.</p><div class="recorder-visual"><span class="recorder-state"><span></span><span class="recorder-state-text">Listo para grabar</span></span><canvas width="700" height="150" aria-hidden="true"></canvas><output class="recorder-time" aria-label="Duración de la grabación">00:00</output><span class="recorder-caption">Tu micrófono. Tu grabación.</span></div><div class="recorder-controls"><button class="recorder-pause" aria-label="Pausar grabación" title="Pausar" disabled>Ⅱ</button><button class="recorder-record" aria-label="Iniciar grabación" title="Iniciar grabación" data-initial-focus><span></span></button><button class="recorder-stop" aria-label="Detener grabación" title="Detener" disabled><span></span></button></div><div class="recorder-mark-actions"><button class="secondary-button recorder-mark" disabled>Añadir marca de audio</button><button class="secondary-button recorder-marks-save" disabled>Guardar marcas…</button><button class="secondary-button recorder-marks-download" disabled>Descargar marcas</button></div><ol class="recorder-marks-list wb-help" aria-label="Marcas de la grabación"></ol><p class="recorder-status status-text" role="status">El micrófono solo se activa al pulsar grabar.</p><section class="recording-result" hidden aria-label="Grabación terminada"><div class="recording-result-heading"><strong>Tu grabación está lista</strong><span class="recording-size"></span></div><audio controls preload="metadata" aria-label="Escuchar grabación"></audio><label class="recording-name-label">Nombre del archivo<input class="recording-name" maxlength="120" aria-label="Nombre del archivo de audio"></label><div class="recording-downloads"><button class="primary-button recorder-save">${icon('download')} Guardar como…</button><button class="secondary-button recorder-download">Descargar</button></div></section><div class="recorder-privacy">${icon('shield')} El audio se queda aquí hasta que lo descargues.<br>No se envía a ningún servidor.</div></div>`;
   const $ = selector => root.querySelector(selector);
   const shell = $('.recorder-shell');
   const recordButton = $('.recorder-record');
@@ -14,7 +14,11 @@ export function mountRecorder(root) {
   let stream = null, recorder = null, chunks = [], blob = null, objectUrl = null;
   let state = 'idle', disposed = false, exported = true, byteCount = 0, elapsed = 0, startedAt = 0;
   let audioContext = null, analyser = null, source = null, animation = 0, limitMessage = '';
-  let saving = false;
+  let saving = false, markers = [];
+  $('.recorder-mark').onclick = () => { if (!['recording','paused'].includes(state)) return; if (markers.length >= 1000) return notify('Máximo de 1.000 marcas por grabación.'); const at = duration() / 1000, label = window.prompt('Nombre de la marca:'); if (label === null) return; markers.push({ at, label: label.trim().slice(0, 120) || `Marca ${markers.length + 1}` }); const item = document.createElement('li'); item.textContent = `${formatDuration(at * 1000)} · ${markers.at(-1).label}`; $('.recorder-marks-list').append(item); };
+  const marksBlob = () => new Blob([JSON.stringify({ version:1, file:recordingFilename($('.recording-name').value,blob?.type || 'audio/webm'), markers },null,2)],{type:'application/json'});
+  $('.recorder-marks-download').onclick = () => downloadFile(marksBlob(),'marcas-audio.json');
+  $('.recorder-marks-save').onclick = () => saveFile(marksBlob(),'marcas-audio.json').catch(() => notify('No se pudieron guardar las marcas.'));
   const supported = !!(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
   if (!supported) {
     recordButton.disabled = true;
@@ -30,6 +34,8 @@ export function mountRecorder(root) {
     const active = ['recording', 'paused'].includes(next);
     recordButton.disabled = !supported || saving || ['requesting', 'recording', 'paused', 'stopping'].includes(next);
     pauseButton.disabled = !active;
+    $('.recorder-mark').disabled = !active;
+    $('.recorder-marks-download').disabled = $('.recorder-marks-save').disabled = !markers.length || active || next === 'requesting' || next === 'stopping';
     stopButton.disabled = !active;
     pauseButton.textContent = next === 'paused' ? '▷' : 'Ⅱ';
     pauseButton.setAttribute('aria-label', next === 'paused' ? 'Reanudar grabación' : 'Pausar grabación');
@@ -89,7 +95,7 @@ export function mountRecorder(root) {
       stream = acquired;
       const mimeType = chooseAudioMime(window.MediaRecorder);
       recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-      chunks = []; byteCount = 0; elapsed = 0; limitMessage = '';
+      chunks = []; byteCount = 0; elapsed = 0; limitMessage = ''; markers = []; $('.recorder-marks-list').replaceChildren();
       if (objectUrl) { player.pause(); player.removeAttribute('src'); player.load(); URL.revokeObjectURL(objectUrl); objectUrl = null; }
       blob = null; exported = false;
       $('.recording-result').hidden = true;

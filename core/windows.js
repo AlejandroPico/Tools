@@ -12,6 +12,7 @@ export class DesktopWindows {
     this.layouts = saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
     this.warnedStorage = false;
     window.addEventListener('resize', () => this.windows.forEach(win => this.fit(win)));
+    window.addEventListener('tools:appearance-change', () => this.windows.forEach(win => this.fit(win)));
     window.addEventListener('beforeunload', event => {
       if ([...this.windows.values()].some(win => win.controller?.preventClose?.())) {
         event.preventDefault(); event.returnValue = '';
@@ -20,6 +21,7 @@ export class DesktopWindows {
   }
 
   bounds() { return { width: this.workspace.clientWidth, height: this.workspace.clientHeight }; }
+  workHeight() { return Math.max(1, this.bounds().height - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--desktop-bottom-reserve')) || 0)); }
   rect(win) {
     const style = win.element.style;
     return { left: parseFloat(style.left), top: parseFloat(style.top), width: parseFloat(style.width), height: parseFloat(style.height) };
@@ -62,7 +64,7 @@ export class DesktopWindows {
     }
     const bounds = this.bounds();
     const width = Math.min(app.width, bounds.width);
-    const workHeight = bounds.height - document.querySelector('.taskbar').offsetHeight;
+    const workHeight = this.workHeight();
     const height = Math.min(app.height, Math.max(200, workHeight - 48));
     const offset = this.windows.size * 28;
     const initial = { width, height, left: (bounds.width - width) / 2 + offset, top: Math.max(0, Math.min(24 + offset, workHeight - height - 12)) };
@@ -112,7 +114,7 @@ export class DesktopWindows {
   arrange(mode) {
     const visible = [...this.windows.values()].filter(win => !win.element.hidden);
     const bounds = this.bounds();
-    const workHeight = Math.max(1, bounds.height - document.querySelector('.taskbar').offsetHeight);
+    const workHeight = this.workHeight();
     const columns = Math.max(1, Math.min(visible.length, Math.floor(bounds.width / 280) || 1, Math.ceil(Math.sqrt(visible.length * bounds.width / workHeight))));
     const rows = Math.ceil(visible.length / columns);
     visible.forEach((win, index) => {

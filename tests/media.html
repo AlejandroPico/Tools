@@ -1,0 +1,16 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tools · Prueba multimedia sin dispositivos</title><link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="../core/desktop.css"><link rel="stylesheet" href="../core/appearance.css"><link rel="stylesheet" href="../core/accessibility.css"><link rel="icon" href="../favicon.svg"></head><body><script type="module">
+// Development-only: synthetic streams exercise the actual app and native MediaRecorder.
+const source = new DOMParser().parseFromString(await (await fetch('../index.html')).text(),'text/html'); document.body.replaceChildren(...source.body.childNodes); document.querySelector('#about-dialog img').src = '../favicon.svg';
+const report = document.createElement('output'); report.id = 'media-test-tracks'; report.style.cssText = 'position:fixed;right:6px;bottom:65px;z-index:9999;background:#fff;color:#000;font:12px monospace;padding:4px'; document.body.append(report);
+// A named opt-in test mode avoids native modal dialogs in automated browser QA.
+if (new URLSearchParams(location.search).has('dialogs')) { window.confirm = () => true; window.prompt = () => 'Marca de prueba'; }
+const tracks = []; const update = () => { report.textContent = `Pistas vivas de prueba: ${tracks.filter(track => track.readyState === 'live').length}`; }; update();
+async function synthetic({video,audio}) {
+  const result = new MediaStream(), cleanup = []; let animation;
+  if (video) { const canvas = document.createElement('canvas'); canvas.width = 640; canvas.height = 360; const ctx = canvas.getContext('2d'); let frame = 0; const paint = () => { ctx.fillStyle = '#16374c'; ctx.fillRect(0,0,640,360); ctx.fillStyle = '#a9f0d1'; ctx.fillRect(40 + (frame++ % 200),90,160,120); ctx.font = '24px sans-serif'; ctx.fillText('TOOLS · VÍDEO SINTÉTICO',40,300); animation = requestAnimationFrame(paint); }; paint(); canvas.captureStream(20).getVideoTracks().forEach(track => result.addTrack(track)); cleanup.push(() => cancelAnimationFrame(animation)); }
+  if (audio) { const context = new AudioContext(); await context.resume(); const source = context.createOscillator(), gain = context.createGain(), destination = context.createMediaStreamDestination(); gain.gain.value = .1; source.connect(gain).connect(destination); source.start(); destination.stream.getAudioTracks().forEach(track => result.addTrack(track)); cleanup.push(() => { source.stop(); context.close().catch(()=>{}); }); }
+  let closed = false; result.getTracks().forEach(track => { tracks.push(track); const stop = track.stop.bind(track); track.stop = () => { stop(); if (!closed && result.getTracks().every(t => t.readyState === 'ended')) { closed = true; cleanup.forEach(fn => fn()); } update(); }; }); update(); return result;
+}
+Object.defineProperty(navigator.mediaDevices,'getDisplayMedia',{configurable:true,value:options => synthetic(options)}); Object.defineProperty(navigator.mediaDevices,'getUserMedia',{configurable:true,value:options => synthetic(options)});
+await import('../app.js');
+</script></body></html>

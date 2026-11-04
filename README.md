@@ -6,7 +6,7 @@ Un pequeño escritorio de herramientas gratuitas en el navegador. Abre varias ap
 
 ## Aplicaciones disponibles
 
-Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Los nueve primeros bloques se reúnen en aplicaciones con funciones agrupadas. También está disponible la Grabadora básica.
+Las funciones se agrupan en aplicaciones completas; las 70 ideas iniciales no implican 70 iconos. Los 14 bloques de la hoja de ruta tienen una primera versión, reunida en 15 aplicaciones; algunas funciones, como lectura, se comparten entre familias.
 
 ### Bloc de notas
 
@@ -75,7 +75,41 @@ Los formularios AcroForm y las firmas requieren activar explícitamente **Conver
 
 Graba desde el micrófono, muestra la onda de audio, permite pausar, reanudar, escuchar el resultado y ponerle nombre. Ofrece **Guardar como…** en navegadores compatibles y **Descargar** como alternativa. El archivo usa el formato que admita el navegador, como WebM/Opus, Ogg o M4A; no se promete MP3.
 
-La grabación permanece en memoria hasta cerrar la herramienta o iniciar otra. Se avisa antes de descartar audio sin exportar. El límite por toma es una hora o aproximadamente 100 MB. No hay transcripción en esta versión.
+La grabación permanece en memoria hasta cerrar la herramienta o iniciar otra. Se avisa antes de descartar audio sin exportar. El límite por toma es una hora o aproximadamente 100 MB. Permite añadir marcas con nombre durante la grabación o la pausa y exportarlas en JSON con sus tiempos y nombre de audio. La transcripción está en la aplicación Voz.
+
+### Capturas
+
+Captura una imagen de la pestaña, ventana o pantalla que autorices; permite seleccionar un recorte con el puntero o coordenadas, deshacerlo y descargar PNG. También abre una imagen local para recortarla. La cámara permite foto y vídeo; la pantalla, grabación de vídeo con pausa y reanudación. El audio es opcional y depende de la fuente y el navegador. El micrófono de la cámara se solicita solo al activarlo expresamente.
+
+Vídeo de hasta 15 minutos o aproximadamente 150 MiB; formato nativo WebM o MP4 cuando esté disponible. Las imágenes se ajustan a 4096 píxeles por lado y 8 millones de píxeles. Las fuentes se liberan al terminar, dejar de compartir o cerrar; minimizar mantiene la captura. Los resultados permanecen en memoria: guarda los que quieras conservar. No se puede capturar otra aplicación sin la selección que exige el navegador.
+
+### Audio
+
+Abre audio compatible, muestra su onda, reproduce a 0,5–2× con control de conservación de tono, selecciona un intervalo y prepara una copia con volumen, normalización y fundido de entrada/salida. WAV permite elegir 8/16/44,1/48 kHz y canales originales, mono o estéreo. Ofrece los codificadores comprimidos que realmente admita MediaRecorder: WebM/Opus, Ogg/Opus o M4A/AAC; no incorpora un codificador MP3. Esa conversión funciona en tiempo real, sin salida a los altavoces.
+
+Une hasta 20 audios en el orden editable de la lista, ajustando frecuencia y canales. Genera tonos senoidales, triangulares, cuadrados o de sierra de 20–20.000 Hz, 0,1–60 segundos, como WAV. Límites de edición: 50 MiB por archivo, 10 minutos por archivo o unión y 48 millones de muestras sumando canales. Los originales no se modifican. Revisa y guarda el resultado preparado antes de cerrar; los archivos no se guardan como borrador.
+
+### Voz
+
+- **Transcripción:** descarga opcional de Whisper Tiny multilingüe y reconocimiento dentro de un Worker local. Abre audio o graba una frase, elige idioma, revisa el texto, descarga TXT y envía los tiempos al editor de subtítulos. Hasta 5 minutos y 50 MiB por audio; los resultados son aproximados y necesitan revisión.
+- **Dictado local:** usa únicamente SpeechRecognition con `processLocally = true`. Comprueba soporte e idiomas y ofrece instalar el paquete del navegador cuando corresponda. No cambia a un servicio remoto si falta soporte. Puede mostrar el texto provisional sobre el escritorio.
+- **Lectura:** voces que el navegador identifica como locales, selección de voz, velocidad y tono, pausa/reanudación y parada al cerrar. Exportación del texto a TXT; no se promete exportar la voz sintetizada.
+- **Subtítulos:** importar, editar, desplazar tiempos y exportar SRT/VTT, hasta 1.000 segmentos; trata su contenido como texto. La transcripción puede enviarlos directamente a esta pestaña.
+- **Teleprónter:** tamaño y velocidad, espejo, pausa, reinicio y pantalla completa cuando se admita.
+
+La primera preparación del modelo descarga aproximadamente 80 MB de pesos y archivos auxiliares desde Hugging Face, más el motor WebAssembly servido con Tools. **El audio no se envía a Hugging Face ni a un servicio de reconocimiento.** La caché permite reutilizar las descargas, pero el navegador puede borrarla. El modelo se carga únicamente al pulsar Preparar; detener o cerrar libera el Worker. Texto, subtítulos y teleprónter tienen borrador local; los audios de entrada y las grabaciones quedan en memoria. Consulta [modelo y licencias](THIRD-PARTY.md). Referencias: [Transformers.js](https://huggingface.co/docs/transformers.js/), [reconocimiento local](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API#on-device_speech_recognition).
+
+### Productividad
+
+Tareas con notas, fecha, prioridad y columnas Pendiente/En curso/Hecho; mueve tarjetas mediante arrastre o selector. Fichas de dos caras con búsqueda, repaso, mezcla y recuento de aciertos. Pizarra con lápiz, texto, borrador por trazo y deshacer. Mapas mentales con nodos y relaciones padre/hijo sin ciclos. Diagramas con rectángulos, óvalos, decisiones, conexiones etiquetadas y flechas. Los nodos admiten arrastre, movimiento por teclado y organización automática.
+
+Cada espacio tiene borrador local, deshacer de hasta 20 cambios y documentos JSON importables/exportables. Las tareas también se guardan en TXT y las tarjetas en CSV. Pizarra, mapas y diagramas exportan SVG y PNG de 1600 × 900. Límites: 500 tareas, 1.000 tarjetas, 200 nodos/500 conexiones, 1.000 trazos/40.000 puntos por pizarra; JSON de hasta 5 MiB. Los campos de creación se incorporan al documento al pulsar Guardar tarea/tarjeta.
+
+### Accesibilidad
+
+Ajustes locales de tamaño del contenido (100/115/130/150 %), alto contraste, filtros gris/sepia/inversión, reducción de movimiento, foco visible y puntero grande. Se conservan por separado del tema y se pueden restablecer, importar o exportar. Lupa de una imagen o pantalla autorizada a 2/4/8×, con control por puntero, coordenadas y flechas. Lectura comparte las voces locales de Voz. El teclado en pantalla escribe en el último campo editable de Tools, respeta selección y grafemas Unicode y activa el guardado de cada aplicación.
+
+Estas funciones actúan dentro de Tools: no controlan otros programas, no sustituyen al teclado del sistema ni amplían el escritorio del sistema sin compartirlo. La pantalla compartida se libera al detener la lupa o cerrar su ventana.
 
 ### Explorador de archivos
 
@@ -108,7 +142,7 @@ Los archivos abiertos, los ZIP y las copias binarias permanecen en memoria hasta
 
 Las ventanas se ajustan al espacio disponible; su contenido puede desplazarse cuando se reduce el tamaño.
 
-Ventanas, paneles, campos y botones tienen esquinas rectas. Solo los marcos de iconos mantienen redondeado. Inicio se titula **Aplicaciones**, con listado alfabético, búsqueda por nombre o función y categorías; no muestra contadores ni frases promocionales.
+La apariencia original Tools mantiene esquinas rectas, salvo los iconos. Las apariencias de sistemas ajustan las esquinas y controles para seguir sus convenciones. Inicio se titula **Aplicaciones**, con listado alfabético, búsqueda por nombre o función y categorías; no muestra contadores ni frases promocionales.
 
 ## Personalizar el escritorio
 
@@ -116,13 +150,15 @@ Pulsa el botón derecho sobre el fondo para abrir el menú propio del escritorio
 
 Las propiedades ofrecen **32 temas seleccionables**, ocho por categoría: mañana, tarde, noche y **Mate**, que cambian el fondo y los colores de las ventanas. Los ocho Mate son fondos sólidos sin degradados, sombras ni efectos de brillo: Negro, Grafito, Carbón, Azul, Verde, Ciruela, Arena y Blanco. **Negro utiliza #000000 tanto en el fondo como en los paneles**, manteniendo controles y texto legibles.
 
-El tema elegido y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
+**Apariencia** es una segunda pestaña de Propiedades: Tools (original), Windows (barra centrada y menú), macOS (barra superior, Dock y controles de colores) y Ubuntu (Actividades y Dock lateral). Cambia el escritorio, el menú y los controles de todas las ventanas. Se puede combinar con cualquiera de los 32 temas, incluido Negro mate. Los iconos de las aplicaciones son vectoriales y se adaptan a cada distribución.
 
-El área de escritorio ocupa toda la pantalla. La barra está pegada abajo; una ventana movida hasta el borde inferior puede quedar parcialmente detrás de ella. Al maximizar se utiliza el espacio por encima de la barra.
+El tema, la apariencia y la última posición y tamaño de cada herramienta se guardan en este navegador. Al volver a entrar no se reabren ventanas automáticamente; recuperan su geometría cuando las abres desde Inicio.
+
+El área de escritorio ocupa el espacio de cada apariencia. Las ventanas movidas pueden alcanzar sus cuatro límites; al maximizar se reservan las barras o Dock correspondientes. La apariencia original mantiene la barra pegada abajo.
 
 ## Tus datos y tus archivos
 
-El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Preferencias, historial y estado del Reloj se guardan en localStorage; notas, borradores de Datos/Imagen/Diseño e identificadores de carpetas en IndexedDB. Pueden perderse si borras los datos del sitio. Los archivos del explorador permanecen en sus carpetas y las grabaciones no se guardan automáticamente entre sesiones. Las copias exportadas son independientes de esos borradores.
+El procesamiento de archivos, audio y cálculos ocurre en el dispositivo. Tools no tiene cuentas, servidor de documentos, analítica ni envío de grabaciones. Preferencias de escritorio/accesibilidad, historial y estado del Reloj se guardan en localStorage; notas, borradores de Datos/Imagen/Diseño/Voz/Productividad y referencias de carpetas en IndexedDB. El modelo de voz utiliza Cache Storage. Pueden perderse si borras los datos del sitio. Los archivos del explorador permanecen en sus carpetas y las grabaciones no se guardan automáticamente entre sesiones. Las copias exportadas son independientes de esos borradores.
 
 **Guardar como…** abre un selector para elegir el archivo de destino cuando existe soporte. **Descargar** utiliza la configuración del navegador: podrá preguntar la ubicación o usar tu carpeta de descargas. Tools no puede imponer ese ajuste.
 
@@ -133,7 +169,7 @@ El micrófono requiere HTTPS o localhost y permiso del navegador, solicitado al 
 Requiere Node.js 22.16 o posterior. Instala las versiones fijadas y arranca la vista local:
 
 ```sh
-npm ci
+npm ci --ignore-scripts
 npm start
 ```
 
@@ -144,7 +180,7 @@ npm test
 npm run build
 ```
 
-La compilación prepara las bibliotecas en `vendor/` y el sitio completo en `dist/`. `vendor/` se genera, no se versiona, y contiene también el motor del visor, sus fuentes y decodificadores. La web publicada utiliza estos archivos locales y no carga bibliotecas desde CDN. Consulta [dependencias y licencias](THIRD-PARTY.md). GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
+La compilación prepara las bibliotecas en `vendor/` y el sitio completo en `dist/`. `vendor/` se genera, no se versiona, y contiene también el motor del visor, sus fuentes y decodificadores, y el motor local de voz. Los scripts de instalación nativos se omiten porque el sitio usa las versiones para navegador. La web publicada utiliza estos archivos locales y no carga bibliotecas desde CDN. Consulta [dependencias y licencias](THIRD-PARTY.md). GitHub Actions ejecuta las pruebas y publica ese directorio en GitHub Pages con cada cambio en `main`; el origen de Pages debe ser GitHub Actions. Las rutas son relativas y funcionan bajo `/Tools/`. La raíz también permite alojamiento estático directo.
 
 ## Estructura
 
@@ -164,6 +200,11 @@ tools/
   file-explorer/            Explorador, ZIP y herramientas binarias
   utilities/                Contraseñas, códigos, números y sorteos
   pdf/                      Visor y organización local de PDF
+  capture/                  Capturas de pantalla y cámara
+  audio/                    Edición, unión, conversión y tonos
+  voice/                    Transcripción, dictado y lectura
+  productivity/             Tareas, tarjetas y gráficos
+  accessibility/            Lupa, teclado y ajustes visuales
 tests/                      Pruebas y archivos de ejemplo
 scripts/                    Servidor local y preparación del sitio
 ```
@@ -172,7 +213,7 @@ Cada herramienta vive en su propia carpeta dentro de `tools/`. El trabajo se rea
 
 ## Desarrollo y próximos pasos
 
-La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. `tests/creative.html` comprueba limpieza de SVG, imágenes y Worker de datos con una imagen de ejemplo. `node scripts/qa-fixtures.mjs` prepara archivos propios de prueba en `.local/qa789/` para verificar ZIP, bytes, PDF y formularios sin usar documentos personales. Las páginas de prueba no se incluyen en `dist/`.
+La [hoja de ruta](ROADMAP.md) recoge las 14 familias y el estado de las entregas. La [base técnica](docs/BASE-TECNICA.md) conserva decisiones y referencias. `tests/browser.html` prueba la grabadora con audio sintético; `tests/explorer.html` prueba copias y creación con identificadores reales de una carpeta aislada del navegador, sin acceder al disco del usuario. `tests/creative.html` comprueba limpieza de SVG, imágenes y Worker de datos con una imagen de ejemplo. `node scripts/qa-fixtures.mjs` prepara archivos propios de prueba en `.local/qa789/` para verificar ZIP, bytes, PDF y formularios sin usar documentos personales. `tests/media.html` usa vídeo y audio sintéticos con MediaRecorder real, sin pedir acceso a dispositivos; el parámetro `?dialogs=1` confirma operaciones y proporciona etiquetas solo dentro de ese entorno de prueba. Las páginas de prueba no se incluyen en `dist/`.
 
 ## Licencia
 

@@ -1,13 +1,28 @@
+import { appearances, getAppearance, applyAppearance } from './appearance.js';
 import { applyTheme, themes, defaultThemeId, getTheme } from './themes.js';
 import { readLocal, writeLocal } from './ui.js';
 
 export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
   const preference = readLocal('desktop-preferences', {});
   let currentTheme = getTheme(preference?.themeId);
+  let currentAppearance = getAppearance(preference?.appearance);
+  const persistPreferences = () => writeLocal('desktop-preferences', { version: 2, themeId: currentTheme.id, appearance: currentAppearance.id });
+  applyAppearance(currentAppearance.id);
   applyTheme(currentTheme);
 
   function mountProperties(root) {
-    root.innerHTML = `<div class="desktop-properties"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>32 temas: mañana, tarde, noche y colores mate. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></div>`;
+    root.innerHTML = `<div class="desktop-properties"><nav class="properties-tabs" role="tablist" aria-label="Personalización"><button role="tab" aria-selected="true" data-properties-tab="ambiente">Ambiente</button><button role="tab" aria-selected="false" data-properties-tab="apariencia">Apariencia</button></nav><section class="properties-ambiente"><div class="properties-heading"><h3>Elige tu ambiente</h3><p>32 temas: mañana, tarde, noche y colores mate. La selección se guarda en este navegador.</p></div><div class="theme-groups" role="radiogroup" aria-label="Tema del escritorio"></div><footer class="properties-footer"><span class="theme-status" role="status"></span><button class="secondary-button theme-reset">Restablecer tema</button></footer></section><section class="properties-apariencia" hidden><div class="properties-heading"><h3>Apariencia del escritorio</h3><p>Elige la distribución, los iconos y los controles de las ventanas. Puedes combinarla con cualquier ambiente.</p></div><div class="appearance-grid" role="radiogroup" aria-label="Apariencia del escritorio"></div><p class="appearance-status theme-status" role="status"></p></section></div>`;
+    const appearanceGrid = root.querySelector('.appearance-grid');
+    for (const item of appearances) {
+      const label = document.createElement('label'); label.className = 'appearance-card';
+      label.innerHTML = `<input type="radio" name="appearance" value="${item.id}"><span class="appearance-mini ${item.id}" aria-hidden="true"></span><strong>${item.name}</strong><small>${item.description}</small>`;
+      const input = label.querySelector('input'); input.checked = item.id === currentAppearance.id; input.setAttribute('aria-label', `Apariencia: ${item.name}`);
+      input.onchange = () => { currentAppearance = item; applyAppearance(item.id); const saved = persistPreferences(); root.querySelector('.appearance-status').textContent = saved ? `Apariencia ${item.name} guardada.` : 'No se pudo guardar la apariencia.'; };
+      appearanceGrid.append(label);
+    }
+    const propertyTabs = [...root.querySelectorAll('[data-properties-tab]')];
+    const selectProperty = tab => { for (const button of propertyTabs) { const selected = button === tab; button.setAttribute('aria-selected', String(selected)); button.tabIndex = selected ? 0 : -1; } root.querySelector('.properties-ambiente').hidden = tab.dataset.propertiesTab !== 'ambiente'; root.querySelector('.properties-apariencia').hidden = tab.dataset.propertiesTab !== 'apariencia'; };
+    propertyTabs.forEach(tab => { tab.onclick = () => selectProperty(tab); tab.onkeydown = event => { if (['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) { event.preventDefault(); const next = propertyTabs[event.key === 'Home' ? 0 : event.key === 'End' ? 1 : tab === propertyTabs[0] ? 1 : 0]; selectProperty(next); next.focus(); } }; });
     const groups = root.querySelector('.theme-groups');
     for (const group of ['Mañana', 'Tarde', 'Noche', 'Mate']) {
       const section = document.createElement('section');
@@ -31,7 +46,7 @@ export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
     status.textContent = `Tema actual: ${currentTheme.name}`;
     function choose(theme) {
       currentTheme = theme; applyTheme(theme);
-      const saved = writeLocal('desktop-preferences', { version: 1, themeId: theme.id });
+      const saved = persistPreferences();
       status.textContent = saved ? `«${theme.name}» guardado en este navegador.` : 'No se pudo guardar. El tema se conservará durante esta sesión.';
       status.classList.toggle('error-text', !saved);
     }
@@ -65,6 +80,8 @@ export function initializeDesktop({ manager, openLauncher, closeLauncher }) {
   menu.querySelectorAll('[data-arrange]').forEach(button => button.addEventListener('click', () => {
     closeMenu(true); manager.arrange(button.dataset.arrange);
   }));
+  document.querySelector('#system-apps').addEventListener('click', () => openLauncher());
+  document.querySelector('#system-windows').addEventListener('click', event => { const rect = event.currentTarget.getBoundingClientRect(); showMenu(rect.left, rect.bottom + 4); });
   const isDesktop = target => !target.closest('.app-window, dialog, #launcher, #desktop-menu');
   document.addEventListener('contextmenu', event => {
     if (!isDesktop(event.target)) return;

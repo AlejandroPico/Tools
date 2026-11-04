@@ -10,6 +10,11 @@
 @import url('./tools/utilities/styles.css');
 @import url('./tools/file-explorer/workbench.css');
 @import url('./tools/pdf/styles.css');
+@import url('./tools/capture/styles.css');
+@import url('./tools/audio/styles.css');
+@import url('./tools/voice/styles.css');
+@import url('./tools/productivity/styles.css');
+@import url('./tools/accessibility/styles.css');
 :root {
   font-family:Inter,"Segoe UI",system-ui,sans-serif;
   color:#e9eef1;
